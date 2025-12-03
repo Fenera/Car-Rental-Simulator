@@ -13,6 +13,10 @@ data[data$Seats == "2+2", c("Seats")] <- 4
 
 data$MPG = gsub("[^0-9\\.]", "", data$MPG)
 data$FuelTank = gsub("[^0-9\\.]", "", data$FuelTank)
+data$VIN = sample(1000:9999, 600, replace = FALSE)
+
+data <- data[, -which(names(data) == c("CC.Battery.Capacity"))]
+
 
 write.csv(data, "Cars Datasets 2025 clean.csv")
 ```
