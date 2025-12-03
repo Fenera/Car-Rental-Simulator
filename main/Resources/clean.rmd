@@ -1,0 +1,19 @@
+---
+title: "Cars Data Cleaning"
+author: "Fenera Taye"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+data = read.csv("Cars Datasets 2025.csv")
+
+data[data$Fuel.Types == "Electric", c("MPG", "FuelTank")] <- 0
+data[data$Seats == "2+2", c("Seats")] <- 4
+
+data$MPG = gsub("[^0-9\\.]", "", data$MPG)
+data$FuelTank = gsub("[^0-9\\.]", "", data$FuelTank)
+
+write.csv(data, "Cars Datasets 2025 clean.csv")
+```
+

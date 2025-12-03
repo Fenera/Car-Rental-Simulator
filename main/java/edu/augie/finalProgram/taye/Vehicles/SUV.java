@@ -1,0 +1,38 @@
+package edu.augie.finalProgram.taye.Vehicles;
+
+public class SUV extends Vehicle {
+
+    private double cargoCapacity;
+    private double towingCapacity;
+
+    public SUV(int VIN, String manufacturer, String model, int year, int odometer, String color,
+               int seatingCapacity, String conditionReport, int numberOfDoors, boolean allWheelDrive,
+               Powertrain powertrain, double cargoCapacity, double towingCapacity, int horsePower) {
+
+        super(VIN, manufacturer, model, year, odometer, color,
+                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower);
+
+        this.cargoCapacity = cargoCapacity;
+        this.towingCapacity = towingCapacity;
+    }
+
+    public double getCargoCapacity() {
+        return cargoCapacity;
+    }
+
+    public void setCargoCapacity(double cargoCapacity) {
+        this.cargoCapacity = cargoCapacity;
+    }
+
+    public double getTowingCapacity() {
+        return towingCapacity;
+    }
+
+    public void setTowingCapacity(double towingCapacity) {
+        this.towingCapacity = towingCapacity;
+    }
+
+    public boolean canTow(double weight){
+        return weight <= towingCapacity;
+    }
+}
