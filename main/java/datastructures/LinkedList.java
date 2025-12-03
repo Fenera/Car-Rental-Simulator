@@ -2,11 +2,11 @@ package datastructures;
 
 // singly-linked list
 // use for rental logs (write to .txt file in utilities package)
-// note to self: add (Comparable) to nodes in void methods & constructor
+// note to self: add (Number) to nodes in void methods & constructor
 public class LinkedList{
 
     // generic class for Node
-    class Node<T extends Comparable<T>>{
+    class Node<T extends Number>{
         private T value;
         private Node<T> next;
 
@@ -20,7 +20,7 @@ public class LinkedList{
     private int length;
 
     public <T> LinkedList(T value){
-        Node firstNode = new Node((Comparable) value); // create first node
+        Node firstNode = new Node((Number) value); // create first node
         head = firstNode;
         tail = firstNode;
         length = 1;
@@ -47,7 +47,7 @@ public class LinkedList{
 
     // Append: Adding a node to the end of a linked list:
     public <T> void append(T value){
-        Node newNode = new Node((Comparable) value); // create newNode
+        Node newNode = new Node((Number) value); // create newNode
         if(head == null){ // LL is empty
             head = newNode;
             tail = newNode;

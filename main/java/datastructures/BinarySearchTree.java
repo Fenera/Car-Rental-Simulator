@@ -13,8 +13,8 @@ package datastructures;
 public class BinarySearchTree {
 
     // create Node class
-    // T must extend Comparable to implement comparison
-    class Node<T extends Comparable<T>> {
+    // T must extend Number to implement comparison
+    class Node<T extends Number> {
         private T value;
         private Node<T> left;
         private Node<T> right;
