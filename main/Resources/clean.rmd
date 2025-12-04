@@ -14,14 +14,18 @@ data[data$Seats == "2+2", c("Seats")] <- 4
 
 data$MPG = gsub("[^0-9\\.]", "", data$MPG)
 data$FuelTank = gsub("[^0-9\\.]", "", data$FuelTank)
-data$VIN = sample(1000:9999, 600, replace = FALSE)
+data$VIN = sample(1000:9999, 95, replace = FALSE)
 # if car is >$100,000, inventory = 1, else inventory = 1,2,or 3
 data = data %>%
   mutate(inventory = ifelse(Cars.Prices > 100000,
                             1,
                             sample(c(1,2), n(), replace = TRUE)))
 
-data <- data[, -which(names(data) == c("CC.Battery.Capacity"))]
+data <- data[, -which(names(data) == "CC.Battery.Capacity")]
+data <- data[, -which(names(data) == "Torque")] # remove columns that are not needed
+
+data$Cars.Prices <- gsub(",", "", data$Cars.Prices) # remove commas to not get it confused when split by comma
+
 
 write.csv(data, "carsData2025.csv")
 ```
