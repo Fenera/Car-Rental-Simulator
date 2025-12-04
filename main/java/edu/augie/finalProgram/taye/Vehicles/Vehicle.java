@@ -15,7 +15,8 @@ public abstract class Vehicle {
     private int horsePower;
 
     public Vehicle(int VIN, String manufacturer, String model, int year, int odometer, String color,
-                   int seatingCapacity, String conditionReport, int numberOfDoors, boolean allWheelDrive, Powertrain powertrain, int horsePower){
+                   int seatingCapacity, String conditionReport, int numberOfDoors, boolean allWheelDrive,
+                   Powertrain powertrain, int horsePower){
         this.VIN = VIN;
         this.manufacturer = manufacturer;
         this.model = model;
