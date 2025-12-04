@@ -14,12 +14,25 @@ data[data$Seats == "2+2", c("Seats")] <- 4
 
 data$MPG = gsub("[^0-9\\.]", "", data$MPG)
 data$FuelTank = gsub("[^0-9\\.]", "", data$FuelTank)
-data$VIN = sample(1000:9999, 95, replace = FALSE)
+data$VIN = sample(1000:9999, 94, replace = FALSE)
 # if car is >$100,000, inventory = 1, else inventory = 1,2,or 3
+
+# added inventory, odometer, color, and doors columns
 data = data %>%
   mutate(inventory = ifelse(Cars.Prices > 100000,
                             1,
-                            sample(c(1,2), n(), replace = TRUE)))
+                            sample(c(1,2), n(), replace = TRUE)), 
+         odometer = ifelse(Cars.Prices > 75000,
+                           sample(seq(1000:25000)),
+                           sample(seq(25000:100000))),
+         color = sample(c("Red", "Blue", "White", "Black", "Gray", "Purple"), 
+                        size = n(),
+                        replace = TRUE),
+         doors = ifelse(BodyType == "Coupe", 2, 4),
+         awd = ifelse(BodyType == c("Coupe", "Sedan"),
+                      FALSE,
+                      TRUE))
+
 
 data <- data[, -which(names(data) == "CC.Battery.Capacity")]
 data <- data[, -which(names(data) == "Torque")] # remove columns that are not needed
@@ -28,5 +41,52 @@ data$Cars.Prices <- gsub(",", "", data$Cars.Prices) # remove commas to not get i
 
 
 write.csv(data, "carsData2025.csv")
+
+
+# added more attributes
+data <- data %>%
+  mutate(
+    powerSource = case_when(
+      Fuel.Types %in% c("Diesel", "Petrol") ~ "Gas",
+      Fuel.Types == "Hybrid" ~ "Hybrid",
+      Fuel.Types == "Electric" ~ "Electric",
+      Fuel.Types == "Plug-in Hybrid" ~ "Plug-In",
+      TRUE ~ NA_character_)
+    ,
+    cargo_capacity = case_when(
+      BodyType == "SUV" ~ 1200,
+      BodyType == "Van" ~ 3500,
+      BodyType == "Bus" ~ 8000,
+      TRUE ~ NA # set NA for other bodytypes
+    ),
+    towing_capacity = case_when(
+      BodyType == "SUV" ~ 3500,
+      BodyType == "Van" ~ 5500,
+      BodyType == "Truck" ~ 7700,
+      TRUE ~ NA
+    ),
+    # following 3 attributes are for Bus class
+    standing_capacity = 150,
+    length = case_when(
+      BodyType == "BUS" ~ sample(c(40,50,60),
+                    size = n(),
+                    replace = TRUE),
+      TRUE ~ NA), # length in feet
+    accessible_ramp = case_when(
+      BodyType == "BUS" ~ TRUE,
+      TRUE ~ NA),
+    trunkVolume = case_when(
+      BodyType == "Sedan" ~ sample(c(12, 15, 20), # in cubic feet
+                         size = n(),
+                         replace = TRUE),
+      TRUE ~ NA),
+    bedLength = case_when(
+      BodyType == "Truck" ~sample(c(5.8, 6.5, 8.0), 
+                       size = n(),
+                       replace = TRUE),
+      TRUE ~ NA)
+)
+
+
 ```
 
