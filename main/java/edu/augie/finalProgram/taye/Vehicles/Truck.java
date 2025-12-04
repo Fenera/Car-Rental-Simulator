@@ -4,17 +4,17 @@ public class Truck extends Vehicle {
 
     // arbitrary values
     private double bedLength;
-    private double maxPayLoad;
+    private double towingCapacity;
 
     public Truck(int VIN, String manufacturer, String model, int year, int odometer, String color,
                  int seatingCapacity, String conditionReport, int numberOfDoors, boolean allWheelDrive,
-                 Powertrain powertrain, double bedLength, double maxPayLoad, int horsePower){
+                 Powertrain powertrain, double bedLength, double towingCapacity, int horsePower){
 
         super(VIN, manufacturer, model, year, odometer, color,
                 seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower);
 
         this.bedLength = bedLength;
-        this.maxPayLoad = maxPayLoad;
+        this.towingCapacity = towingCapacity;
     }
 
 
@@ -26,15 +26,15 @@ public class Truck extends Vehicle {
         this.bedLength = bedLength;
     }
 
-    public double getMaxPayLoad() {
-        return maxPayLoad;
+    public double getTowingCapacity() {
+        return towingCapacity;
     }
 
-    public void setMaxPayLoad(double maxPayLoad) {
-        this.maxPayLoad = maxPayLoad;
+    public void setTowingCapacity(double towingCapacity) {
+        this.towingCapacity = towingCapacity;
     }
 
     public boolean isOverLoaded(double weight){
-        return weight > maxPayLoad;
+        return weight > towingCapacity;
     }
 }
