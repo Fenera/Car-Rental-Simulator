@@ -2,11 +2,11 @@ package datastructures;
 
 // singly-linked list
 // use for rental logs (write to .txt file in utilities package)
-// note to self: add (Number) to nodes in void methods & constructor
+// note to self: add (Object) to nodes in void methods & constructor
 public class LinkedList <T>{
 
     // generic class for Node
-    class Node<T extends Number>{
+    class Node<T extends Object>{
         private T value;
         private Node<T> next;
 
@@ -19,10 +19,11 @@ public class LinkedList <T>{
     private Node tail; // end of LL
     private int length;
 
-    public <T> LinkedList(T value){
-        Node firstNode = new Node((Number) value); // create first node
-        head = firstNode;
-        tail = firstNode;
+    public <T> LinkedList(){
+        // T value - parameter
+        //Node firstNode = new Node((Object) value); // create first node
+        //head = firstNode;
+        //tail = firstNode;
         length = 1;
     }
 
@@ -47,7 +48,7 @@ public class LinkedList <T>{
 
     // Append: Adding a node to the end of a linked list:
     public <T> void append(T value){
-        Node newNode = new Node((Number) value); // create newNode
+        Node newNode = new Node((Object) value); // create newNode
         if(head == null){ // LL is empty
             head = newNode;
             tail = newNode;
