@@ -3,7 +3,7 @@ package datastructures;
 // singly-linked list
 // use for rental logs (write to .txt file in utilities package)
 // note to self: add (Number) to nodes in void methods & constructor
-public class LinkedList{
+public class LinkedList <T>{
 
     // generic class for Node
     class Node<T extends Number>{

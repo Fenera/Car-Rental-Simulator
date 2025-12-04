@@ -10,7 +10,7 @@ package datastructures;
 * Source accessed: https://stackoverflow.com/questions/11263244/java-how-do-i-implement-a-generic-binary-search-tree
 * Date: 12/2/2025*/
 
-public class BinarySearchTree {
+public class BinarySearchTree <T, V>{
 
     // create Node class
     // T must extend Number to implement comparison
@@ -21,40 +21,41 @@ public class BinarySearchTree {
 
         // methods
 
-        public Node(T value){
+        public Node(T value) {
             this.value = value;
         }
 
-        public T getValue(){
+        public T getValue() {
             return value;
         }
 
-        public void setValue(T value){
+        public void setValue(T value) {
             this.value = value;
         }
 
-        public Node<T> getLeft(){
+        public Node<T> getLeft() {
             return left;
         }
 
-        public void setLeft(Node<T> newLeft){
+        public void setLeft(Node<T> newLeft) {
             left = newLeft;
         }
 
-        public Node<T> getRight(){
+        public Node<T> getRight() {
             return right;
         }
 
-        public void setRight(Node<T> newRight){
+        public void setRight(Node<T> newRight) {
             right = newRight;
         }
+    }
 
         private Node root; // the root is the top-most node of a BST
 
         // no BST constructor is needed because I can assign a root in insert so default constructor suffices
 
-        public boolean insert(T value){
-            Node newNode = new Node(value);
+        public <T> boolean insert(T value){
+            Node newNode = new Node((Number) value);
 
             // assign root if BST is empty
             if(root == null){
@@ -91,7 +92,7 @@ public class BinarySearchTree {
         }
 
         // checks if the binary search tree contains the value
-        public boolean contains(T value){
+        public <T> boolean contains(T value){
             if(root == null) return true; // BST is empty
             Node temp = root; // temporary variable that points to root
             while(temp != null){
@@ -106,6 +107,4 @@ public class BinarySearchTree {
             }
             return false; // BST did not contain value
         }
-    }
-
 }
