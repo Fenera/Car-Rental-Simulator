@@ -2,18 +2,18 @@ package edu.augie.finalProgram.taye.Vehicles;
 
 public class Bus extends Vehicle{
 
-    private double luggageSpace;
+    private double cargoCapacity;
     private int standingCapacity;
     private double length;
     private boolean accessibleRamp;
 
     public Bus(int VIN, String manufacturer, String model, int year, int odometer, String color,
                int seatingCapacity, String conditionReport, int numberOfDoors, boolean allWheelDrive,
-               Powertrain powertrain, int horsePower, double luggageSpace, int standingCapacity, double length, boolean accessRamp) {
+               Powertrain powertrain, int horsePower, double cargoCapacity, int standingCapacity, double length, boolean accessRamp) {
 
         super(VIN, manufacturer, model, year, odometer, color,
                 seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower);
-        this.luggageSpace = luggageSpace;
+        this.cargoCapacity = cargoCapacity;
         this.standingCapacity = standingCapacity;
         this.length = length;
         this.accessibleRamp = accessRamp;
@@ -22,12 +22,12 @@ public class Bus extends Vehicle{
     public int getTotalCapacity(){
         return super.getSeatingCapacity() + standingCapacity;
     }
-    public double getLuggageSpace() {
-        return luggageSpace;
+    public double getCargoCapacity() {
+        return cargoCapacity;
     }
 
-    public void setLuggageSpace(double luggageSpace) {
-        this.luggageSpace = luggageSpace;
+    public void setCargoCapacity(double cargoCapacity) {
+        this.cargoCapacity = cargoCapacity;
     }
 
     public int getStandingCapacity() {
