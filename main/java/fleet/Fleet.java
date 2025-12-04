@@ -83,7 +83,7 @@ public class Fleet {
             }
 
             /*
-            * TODO: Add Vehicle objects to LL
+            * to do: Add Vehicle objects to LL
             *  else gas, plugIN, hybrid, electric....
             * */
         }
