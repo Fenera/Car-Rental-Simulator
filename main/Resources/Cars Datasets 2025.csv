@@ -31,7 +31,6 @@ TOYOTA,4RUNNER ,V6,"3,956 cc",270 hp,200 km/h,7.5 sec,"$37,400 ",Petrol,5,400 Nm
 TOYOTA,TACOMA,I4,"2,694 cc",159 hp,180 km/h,9.5 sec,"$26,400 ",Petrol,5,400 Nm,Truck,23 mpg (est),21.1 gal (est)
 TOYOTA,TUNDRA,V8,"5,663 cc",381 hp,220 km/h,6.7 sec,"$39,900 ",Petrol,5,650 Nm,Truck,20 mpg (est),26.0 gal (est)
 TOYOTA,AVALON,V6,"3,456 cc",301 hp,220 km/h,6.9 sec,"$41,400 ",Petrol,5,400 Nm,Sedan,28 mpg (est),18.5 gal (est)
-TOYOTA,MIRAI,I4,"1,798 cc",151 hp,180 km/h,9.2 sec,"$52,400 ",Hydrogen,5,335 Nm,Sedan,MPGe varies (fuel cell),N/A
 TOYOTA,SIENNA,V6,"2,494 cc",245 hp,190 km/h,8.0 sec,"$44,150 ",Petrol,7,360 Nm,Van,36 mpg (hybrid),14.5 gal (est)
 TOYOTA,VENZA,I4,"2,494 cc",219 hp,200 km/h,7.5 sec,"$33,400 ",Hybrid,5,400 Nm,SUV,40 mpg (hybrid; est),14.5 gal (est)
 TOYOTA,HIGHLANDER HYBRID,V6,"3,456 cc",240 hp,220 km/h,8.2 sec,"$40,400 ",Hybrid,7,350 Nm,SUV,36 mpg (est),17.1 gal (est)
@@ -53,7 +52,6 @@ TOYOTA,GR COROLLA,"1.6L,TURBOCHARGED INLINE-3","1,618 cc",300 hp,230 km/h,5. 0 s
 TOYOTA,LAND CRUISER 300,"3.3L,V6,TWIN TURBO DIESEL","3,346 cc",305 hp,210 km/h,6.8 sec,"$58,500 ",Petrol,7,650 Nm,SUV,17 mpg (est),24.6 gal (est)
 TOYOTA,TUNDRA I-FORCE MAX,"3.5L,V6,HYBRID TWIN-TURBO","3,445 cc",437 hp,180 km/h,6.2 sec,"$56,000 ",Hybrid,5,750 Nm,Truck,20 mpg (est),26.0 gal (est)
 TOYOTA,COROLLA HATCHBACK XSE,"2.0L,INLINE-4","1,987 cc",169 hp,190 km/h,8.2 sec,"$25,390 ",Petrol,5,250 Nm,Hatchback,34 mpg (est),13.2 gal (est)
-TOYOTA,MIRAI,"HYDROGEN FUEL CELL,ELECTRIC MOTOR",1.24 kwh,152 hp,180 km/h,9.0 sec,"$49,500 ",Hydrogen,5,335 Nm,Sedan,MPGe varies (fuel cell),N/A
 TOYOTA,HILUX GR SPORT,"2.8L,TURBO,DIESEL","2,755 cc",224 hp,170 km/h,10.0 sec,"$50,000 ",Petrol,5,500 Nm,Truck,22 mpg (est),22.0 gal (est)
 TOYOTA,GR YARIS,"1.6L,TURBOCHARGED INLINE-3","1,618 cc",268 hp,230 km/h,5.5 sec,"$45,000 ",Petrol,4,390 Nm,Hatchback,35 mpg (est),10.6 gal (est)
 HYUNDAI,SANTA FE,1.6L PETROL + PLUG IN HYBRID SYSTEM,"1,600 cc",253 hp,180 km/h,9.3 sec,"$50,000 ",Petrol,7,420 Nm,SUV,28 mpg (est),18.8 gal (est)
@@ -94,3 +92,4 @@ Mazda,Mazda3,2.0L SkyActiv-G,"2,000 cc",155 hp,200 km/h,8.9 sec,"$22,000 ",Petro
 Mazda,Mazda3 Hatchback,2.5L SkyActiv-G,"2,500 cc",186 hp,210 km/h,8.3 sec,"$24,000 ",Petrol,5,252 Nm,Hatchback,30,14
 Mazda,Mazda6,2.5L Turbocharged,"2,500 cc",250 hp,240 km/h,6.4 sec,"$27,000 ",Petrol,5,420 Nm,Sedan,26,16
 Mazda,CX-3,2.0L SkyActiv-G,"2,000 cc",146 hp,180 km/h,9.5 sec,"$21,000 ",Petrol,5,197 Nm,SUV,29,12
+Toyota,Coaster,4.0L,"2,500 cc",134 hp,120 km/h,15 sec,"$70,000 ",Diesel,20,390,BUS,17,40
