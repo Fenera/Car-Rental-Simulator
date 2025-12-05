@@ -18,7 +18,8 @@ import java.util.Objects;
 
 
 public class Fleet {
-    private BinarySearchTree<String, Vehicle> vehicleByVinBST; // this is to store all the cars on the fleet
+    private BinarySearchTree<Integer, Vehicle> vehicleByVinBST; // this is to store all the cars on the fleet by their vin number
+    private BinarySearchTree<Integer, Double> rateByVinBST; // stores the rate (daily) of each vehicle and their vin number
     private LinkedList<Vehicle> availableVehicleLL; // this is to store all the cars that are available
 
     public Fleet(){
@@ -48,12 +49,12 @@ public class Fleet {
             double fuelEconomy = Double.valueOf(r[11]);
             double gasTankSize = Double.valueOf(r[12]);
             int vinNumber = Integer.valueOf(r[13]);
-            int inventory = Integer.valueOf(r[14]);
+            int inventory = Integer.valueOf(r[14]); // not implemented
             int odometer = Integer.valueOf(r[15]);
             String color = r[16];
             int numberDoors = Integer.valueOf(r[17]);
             boolean awd = r[18].equals("TRUE");
-            String fuelClass = r[19];
+            String fuelClass = r[19]; // GAS, Electric, Plug-In (hybrid), Hybrid
 
 
             // Update in the future (if needed)
@@ -68,17 +69,36 @@ public class Fleet {
             boolean accessibleRamp = r[24].equals("TRUE");
             double trunkVolume = Double.valueOf(r[25]);
             double bedLength = Double.valueOf(r[26]);
+            int maxRange = Integer.valueOf(r[27]);
+            int batteryHealth = Integer.valueOf(r[28]);
+            double dailyRate = Double.valueOf(r[29]); // ($/day)
 
 
-            vehicleByVinBST.insert(Integer.valueOf(vinNumber)); // VIN is the last column in the array
             Vehicle vehicle; // instantiate Vehicle object
 
+
             // determine the class of the vehicle to create appropriate object (SUV, Sedan...)
+            // determine the fuel classes of these vehicles to have the right arguments for creating the Vehicle objects
+
             if(vehicleClass.equals("SUV")){
                 if(Objects.equals(fuelClass, "Gas")) {
                     vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
                             numberOfSeats, conditionReport, numberDoors, awd,
                             new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
+                } else if(Objects.equals(fuelClass, "Hybrid")){
+                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                            numberOfSeats, conditionReport, numberDoors, awd,
+                            new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
+                } else if(Objects.equals(fuelClass, "Plug-In")){
+                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                            numberOfSeats, conditionReport, numberDoors, awd,
+                            new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
+                } else if(Objects.equals(fuelClass, "Electric")){
+                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                            numberOfSeats, conditionReport, numberDoors, awd,
+                            new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
+                } else{
+                    continue; // skip the current iteration if fuelClass is invalid
                 }
             } else if(vehicleClass.equals("Sedan")){
                 if(Objects.equals(fuelClass, "Gas")) {
@@ -184,6 +204,9 @@ public class Fleet {
                 throw new RuntimeException("The car cannot be added to the fleet");
             }
 
+            vehicleByVinBST.insert(vinNumber, vehicle); // insert the vin and vehicle into the BST
+            rateByVinBST.insert(vinNumber, dailyRate);
+            availableVehicleLL.append(vehicle);
             /*
             * to do: Add Vehicle objects to LL
             *  else gas, plugIN, hybrid, electric....
@@ -191,15 +214,29 @@ public class Fleet {
         }
     }
 
-    public void getVehicleByVin(){
-
+    public boolean carInFleet(int VIN){
+        // checks to see if the car is part of the fleet
+        return vehicleByVinBST.contains(VIN);
     }
+    public Vehicle getVehicleByVin(int vin){
+        return vehicleByVinBST.searchByKey(vin);
+    }
+
+    public double getRateByVin(int vin){
+        return rateByVinBST.searchByKey(vin);
+    }
+
+    public void showInventory(){
+        // Displays all the cars in the fleet
+        // BinarySearchTree<Integer, Vehicle>
+        vehicleByVinBST.printTree(vehicleByVinBST.getRoot());
+    }
+
     // or Manager object
     public void addNewVehicle(int managerID){
 
     }
 
     public void removeVehicleFromLot(int managerID) {
-
     }
 }
