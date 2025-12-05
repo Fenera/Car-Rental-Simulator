@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.Vehicles;
+package edu.augie.finalProgram.taye;
 
 public class main{
     public static void main(String[] args){

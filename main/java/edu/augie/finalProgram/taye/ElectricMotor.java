@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.Vehicles;
+package edu.augie.finalProgram.taye;
 
 public class ElectricMotor implements Powertrain{
     // the values for the following 3 variables are arbitrary for the context of this program

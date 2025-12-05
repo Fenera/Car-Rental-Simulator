@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.Vehicles;
+package edu.augie.finalProgram.taye;
 
 public class GasMotor implements Powertrain{
     private String fuelType; // gas/diesel

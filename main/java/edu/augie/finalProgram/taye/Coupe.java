@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.Vehicles;
+package edu.augie.finalProgram.taye;
 
 public class Coupe extends Vehicle{
     public Coupe(int VIN, String manufacturer, String model, int year, int odometer, String color,

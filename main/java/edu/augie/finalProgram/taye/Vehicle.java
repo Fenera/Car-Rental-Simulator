@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.Vehicles;
+package edu.augie.finalProgram.taye;
 
 public abstract class Vehicle {
     private Powertrain powertrain;
