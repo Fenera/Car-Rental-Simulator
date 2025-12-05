@@ -10,7 +10,7 @@ public class Convertible extends Vehicle{
                  Powertrain powertrain, int horsePower) {
 
         super(VIN, manufacturer, model, year, odometer, color,
-                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower);
+                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower, true);
 
         this.softTop = softTop;
         this.rollBars = rollBars;

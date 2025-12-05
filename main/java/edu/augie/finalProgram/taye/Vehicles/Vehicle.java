@@ -13,24 +13,8 @@ public abstract class Vehicle {
     private int numberOfDoors;
     private boolean allWheelDrive;
     private int horsePower;
+    private boolean isAvailable; // all vehicles are initially available so subclasses of Vehicle will have true in their super(..., true) method
 
-    public Vehicle(int VIN, String manufacturer, String model, int year, int odometer, String color,
-                   int seatingCapacity, String conditionReport, int numberOfDoors, boolean allWheelDrive,
-                   Powertrain powertrain, int horsePower){
-        this.VIN = VIN;
-        this.manufacturer = manufacturer;
-        this.model = model;
-        this.year = year;
-        this.odometer = odometer;
-        this.color = color;
-        this.seatingCapacity = seatingCapacity;
-        this.conditionReport = conditionReport;
-        this.numberOfDoors = numberOfDoors;
-        this.allWheelDrive = allWheelDrive;
-        this.powertrain = powertrain;
-        this.horsePower = horsePower;
-    }
-    // constructor with isAvailable added (Vehicle subclasses don't need this parameter but Fleet.java does)
     public Vehicle(int VIN, String manufacturer, String model, int year, int odometer, String color,
                    int seatingCapacity, String conditionReport, int numberOfDoors, boolean allWheelDrive,
                    Powertrain powertrain, int horsePower, boolean isAvailable){
@@ -48,6 +32,7 @@ public abstract class Vehicle {
         this.horsePower = horsePower;
         this.isAvailable = isAvailable;
     }
+
     public Vehicle(){
         this.VIN = 0;
         this.manufacturer = "Unknown";
@@ -75,6 +60,8 @@ public abstract class Vehicle {
     public boolean isSporty(){
         return horsePower > 300;
     }
+
+    // getter and setter methods
 
     public int getHorsePower() {
         return horsePower;
@@ -136,8 +123,8 @@ public abstract class Vehicle {
         return odometer;
     }
 
-    public void setOdometer(int odometer) {
-        this.odometer = odometer;
+    public void setOdometer(int driven) {
+        this.odometer += driven;
     }
 
     public String getColor() {
@@ -172,16 +159,31 @@ public abstract class Vehicle {
         this.numberOfDoors = numberOfDoors;
     }
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     @Override
     public String toString() {
-        return "Vehicles{" +
-                "VIN=" + VIN +
+        return "Vehicle{" +
+                ", VIN=" + VIN +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", model='" + model + '\'' +
                 ", year=" + year +
                 ", odometer=" + odometer +
+                ", color='" + color + '\'' +
+                ", seatingCapacity=" + seatingCapacity +
+                ", conditionReport='" + conditionReport + '\'' +
+                ", numberOfDoors=" + numberOfDoors +
+                ", allWheelDrive=" + allWheelDrive +
+                ", horsePower=" + horsePower +
+                ", isAvailable=" + isAvailable +
+                "powertrain=" + powertrain +
                 '}';
     }
-
 }
 

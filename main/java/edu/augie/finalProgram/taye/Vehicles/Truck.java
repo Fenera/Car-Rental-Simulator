@@ -11,7 +11,7 @@ public class Truck extends Vehicle {
                  Powertrain powertrain, double bedLength, double towingCapacity, int horsePower){
 
         super(VIN, manufacturer, model, year, odometer, color,
-                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower);
+                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower, true);
 
         this.bedLength = bedLength;
         this.towingCapacity = towingCapacity;

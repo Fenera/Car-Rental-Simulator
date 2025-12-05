@@ -12,7 +12,7 @@ public class Bus extends Vehicle{
                Powertrain powertrain, int horsePower, double cargoCapacity, int standingCapacity, double length, boolean accessRamp) {
 
         super(VIN, manufacturer, model, year, odometer, color,
-                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower);
+                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower, true);
         this.cargoCapacity = cargoCapacity;
         this.standingCapacity = standingCapacity;
         this.length = length;

@@ -10,7 +10,7 @@ public class Van extends Vehicle{
                  Powertrain powertrain, int horsePower, double bedLength, double maxPayLoad, double cargoCapacity, double towingCapacity) {
 
         super(VIN, manufacturer, model, year, odometer, color,
-                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower);
+                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower, true);
         this.cargoCapacity = cargoCapacity;
         this.towingCapacity = towingCapacity;
     }

@@ -10,7 +10,7 @@ public class Sedan extends Vehicle {
 
         super(VIN, manufacturer, model, year, odometer, color,
                 seatingCapacity, conditionReport, numberOfDoors,
-                allWheelDrive, powertrain, horsePower);
+                allWheelDrive, powertrain, horsePower, true);
 
         this.trunkVolume = trunkVolume;
     }
