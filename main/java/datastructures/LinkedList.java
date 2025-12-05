@@ -1,5 +1,7 @@
 package datastructures;
 
+import java.util.Iterator;
+
 // singly-linked list
 // use for rental logs (write to .txt file in utilities package)
 // note to self: add (Object) to nodes in void methods & constructor
@@ -161,7 +163,7 @@ public class LinkedList <T>{
 
     // remove a node at a particular index
 
-    public <T> Node remove(int index){
+    public <T> Node removeByIndex(int index){
         // node is at the start or end of LL
         if(index == 0) return removeFirst();
         if(index == length - 1) return removeLast();
@@ -176,6 +178,7 @@ public class LinkedList <T>{
             return null;
         }
     }
+
 
     public void reverse(){
         // reverse head and tail
@@ -192,6 +195,35 @@ public class LinkedList <T>{
             before = temp; // move before forward
             temp = after; // move after forward
         }
+    }
+
+    public Iterator<T> items() {
+        return new Iterator<T>() {
+
+            Node current = head;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public T next() {
+                if (hasNext()) {
+                    T data = (T) current.value;
+                    current = current.next;
+                    return data;
+                }
+                return null;
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException("Remove not implemented.");
+            }
+
+        };
 
     }
 }
+
