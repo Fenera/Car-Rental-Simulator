@@ -121,4 +121,41 @@ public class LogEntry {
                 ", detail='" + detail + '\'' +
                 '}';
     }
+
+    // getter & setter methods
+
+    public String getTime() {
+        // converts LocalDateTime object to String time with correct format
+        return String.format("%d/%d/%d @ %d:%d:%d", time.getMonth(), time.getDayOfMonth(), time.getYear(),
+                time.getHour(), time.getMinute(), time.getSecond());
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public LogType getType() {
+        return type;
+    }
+
+    public void setType(LogType type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "LogEntry{" +
+                "time=" + getTime() +
+                ", message='" + message + '\'' +
+                ", type=" + type +
+                '}';
+    }
 }
