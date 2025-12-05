@@ -28,98 +28,13 @@ public class LogEntry {
     * */
 
     private LocalDateTime time;
-    private String action;
-    private Employee employee;
-    private Client customer;
-    private int vin;
-    private Rental rental;
-    private String detail;
+    private String message;
+    private LogType type;
 
-
-    public LogEntry(LocalDateTime time, String action, Employee employee,
-                  Client customer, int vin, Rental rental, String detail){
+    public LogEntry(LocalDateTime time, String message, LogType type) {
         this.time = time;
-        this.action = action;
-        this.employee = employee;
-        this.customer = customer;
-        this.vin = vin;
-        this.rental = rental;
-        this.detail = detail;
-    }
-
-    //
-
-    // getter & setter methods
-
-    public String getTime() {
-        // converts LocalDateTime object to String time with correct format
-        return String.format("%d/%d/%d @ %d:%d:%d", time.getMonth(), time.getDayOfMonth(), time.getYear(),
-                time.getHour(), time.getMinute(), time.getSecond());
-    }
-
-    public void setTime(LocalDateTime time) {
-        this.time = time;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public Client getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Client customer) {
-        this.customer = customer;
-    }
-
-    public int getVin() {
-        return vin;
-    }
-
-    public void setVin(int vin) {
-        this.vin = vin;
-    }
-
-    public Rental getRental() {
-        return rental;
-    }
-
-    public void setRental(Rental rental) {
-        this.rental = rental;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    @Override
-    public String toString() { // custom toString() method to track rentals/returns
-        return "LogEntry{" +
-                "time=" + getTime() +
-                ", action='" + action + '\'' +
-                ", employeeID=" + employee.getStaffID() +
-                ", customerID=" + customer.getClientID() +
-                ", vin=" + vin +
-                ", rentalID=" + rental.getRentalID() +
-                ", detail='" + detail + '\'' +
-                '}';
+        this.message = message;
+        this.type = type;
     }
 
     // getter & setter methods
@@ -158,4 +73,5 @@ public class LogEntry {
                 ", type=" + type +
                 '}';
     }
+
 }
