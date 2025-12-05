@@ -84,8 +84,20 @@ data <- data %>%
       BodyType == "Truck" ~sample(c(5.8, 6.5, 8.0), 
                        size = n(),
                        replace = TRUE),
-      TRUE ~ NA)
-)
+      TRUE ~ NA),
+    
+    # For electric vehicles (need max range and battery helth)
+    maxRange = case_when(
+      Fuel.Types == "Electric" ~ sample(c(250, 300),
+                                        size = n(),
+                                        replace = TRUE),
+      TRUE ~ NA
+    ),
+    batteryHealth = case_when(
+      Fuel.Types =="Electric" ~ sample(c(50, 55, 70, 85, 95, 100),
+                                         size = n(),
+                                         replace = TRUE),
+    TRUE ~ NA))
 
 
 ```
