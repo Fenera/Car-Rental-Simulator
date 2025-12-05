@@ -4,13 +4,11 @@ public class ElectricMotor implements Powertrain{
     // the values for the following 3 variables are arbitrary for the context of this program
     private int maxRange;
     private int batteryHealth;
-    private String batteryCondition;
 
 
-    public ElectricMotor(int maxRange, int batteryHealth, String batteryCondition){
+    public ElectricMotor(int maxRange, int batteryHealth){
         this.maxRange = maxRange;
         this.batteryHealth = batteryHealth;
-        this.batteryCondition = batteryCondition;
     }
 
     @Override
@@ -37,10 +35,6 @@ public class ElectricMotor implements Powertrain{
 
     public int getBatteryHealth(){
         return batteryHealth;
-    }
-
-    public void setBatteryCondition(String batteryCondition){
-        this.batteryCondition = batteryCondition;
     }
 
 }
