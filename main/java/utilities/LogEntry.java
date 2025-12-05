@@ -110,14 +110,14 @@ public class LogEntry {
     }
 
     @Override
-    public String toString() {
+    public String toString() { // custom toString() method to track rentals/returns
         return "LogEntry{" +
-                "time=" + time +
+                "time=" + getTime() +
                 ", action='" + action + '\'' +
-                ", employee=" + employee +
-                ", customer=" + customer +
+                ", employeeID=" + employee.getStaffID() +
+                ", customerID=" + customer.getClientID() +
                 ", vin=" + vin +
-                ", rental=" + rental +
+                ", rentalID=" + rental.getRentalID() +
                 ", detail='" + detail + '\'' +
                 '}';
     }
