@@ -142,7 +142,53 @@ public class BinarySearchTree <T extends Comparable<T>, V> {
                 printTree(node.left); // print left subtree
                 System.out.println(node.value); // print the current nodes
                 printTree(node.right); // print right subtree
+        }
+
+        public void delete(T key){
+            root = removeByKey(root, key);
+        }
+
+        public Node<T, V> removeByKey(Node<T, V> root, T key){
+            // removes the node from the bst given its value (i.e. remove vehicle from vehicle bst by vin #)
+            if(root == null){
+                return root;
             }
+
+            int compare = key.compareTo(root.key);
+
+            if(compare < 0){ // traverse tree (left side)
+                root.left = removeByKey(root.left, key);
+            } else if(compare > 0){
+                root.right = removeByKey(root.right, key); // traverse tree on right side
+            } else{ // this means the keys are equal to each other -> node is found
+
+                // nodes have 1 children
+                // deleting root node so the parent node should point to root.right (root.left is nonexistent)
+                if(root.left == null){
+                    return root.right;
+                } else if(root.right == null){ // same as above but point to root.left
+                    return root.right;
+                }
+
+                // node has two children
+                // get the smallest in right subtree
+                root.key = (T) findMin(root.right);
+
+                root.right = removeByKey(root.right, root.key);
+            }
+            return root;
+        }
+
+        // finds the node with the smallest value in the subtree (left side for bst)
+        public T findMin(Node node){
+            T minv = (T) node.key;
+            while(node.left != null) {
+                minv = (T) node.left.key;
+                node = node.left;
+            }
+
+            return minv;
+        }
 
 
 
