@@ -30,6 +30,24 @@ public abstract class Vehicle {
         this.powertrain = powertrain;
         this.horsePower = horsePower;
     }
+    // constructor with isAvailable added (Vehicle subclasses don't need this parameter but Fleet.java does)
+    public Vehicle(int VIN, String manufacturer, String model, int year, int odometer, String color,
+                   int seatingCapacity, String conditionReport, int numberOfDoors, boolean allWheelDrive,
+                   Powertrain powertrain, int horsePower, boolean isAvailable){
+        this.VIN = VIN;
+        this.manufacturer = manufacturer;
+        this.model = model;
+        this.year = year;
+        this.odometer = odometer;
+        this.color = color;
+        this.seatingCapacity = seatingCapacity;
+        this.conditionReport = conditionReport;
+        this.numberOfDoors = numberOfDoors;
+        this.allWheelDrive = allWheelDrive;
+        this.powertrain = powertrain;
+        this.horsePower = horsePower;
+        this.isAvailable = isAvailable;
+    }
     public Vehicle(){
         this.VIN = 0;
         this.manufacturer = "Unknown";
