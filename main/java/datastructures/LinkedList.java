@@ -225,5 +225,38 @@ public class LinkedList <T>{
         };
 
     }
+
+    public void delete(T key){
+        // removes a node from a linked list given its value
+
+        // check if the LL is empty
+        if(head == null) return;
+
+        // head is the node to remove
+        if(head.value == key){
+            removeFirst(); // remove the head
+        }
+        // tail is the node to remove
+        if(tail.value == key){
+            removeLast(); // remove tail
+        }
+
+        // the node to remove is somewhere between head and tail
+        // need to use two pointers (one fast pointer and one slow pointer)
+        Node current = head;
+        Node previous = null;
+
+        while(current != null && !current.value.equals(key)){ // iterate to end of LL -> break if end reached or node found
+            previous = current; // previous is behind current
+            current = current.next; // current is in front of previous
+        }
+        // broke loop because end reached or node found
+        if(current != null){
+            previous.next = current.next; // break off target node connection (previous points to node in front of current)
+        }
+
+
+    }
+
 }
 
