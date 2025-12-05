@@ -1,11 +1,15 @@
 package fleet;
 import datastructures.BinarySearchTree;
 import datastructures.LinkedList;
-import edu.augie.finalProgram.taye.Vehicles.*;
+import edu.augie.finalProgram.taye.*;
+import staff.Manager;
+import utilities.LogEntry;
+import utilities.LogManager;
+import utilities.LogType;
 import utilities.ReadCSV;
-import utilities.Logger;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,10 +25,14 @@ public class Fleet {
     private BinarySearchTree<Integer, Vehicle> vehicleByVinBST; // this is to store all the cars on the fleet by their vin number
     private BinarySearchTree<Integer, Double> rateByVinBST; // stores the rate (daily) of each vehicle and their vin number
     private LinkedList<Vehicle> availableVehicleLL; // this is to store all the cars that are available
+    Manager manager;
+    LogManager logManager;
 
-    public Fleet(){
+    public Fleet(Manager manager, LogManager logManager){
         this.vehicleByVinBST = new BinarySearchTree<>();
         this.availableVehicleLL = new LinkedList<Vehicle>();
+        this.manager = manager;
+        this.logManager = logManager;
     }
 
     public void loadFromFile(String file) throws IOException {
@@ -233,10 +241,33 @@ public class Fleet {
     }
 
     // or Manager object
-    public void addNewVehicle(int managerID){
-
+    public void addNewVehicle(int managerID, Vehicle vehicle, double dailyRate){
+        if(managerID == manager.getStaffID()){ // confirm the manager's id is valid
+            vehicleByVinBST.insert(vehicle.getVIN(), vehicle);
+            availableVehicleLL.append(vehicle);
+            rateByVinBST.insert(vehicle.getVIN(), dailyRate);
+            // create message to add to log entry
+            String logMessage = String.format("Manager (%d) added %s to the fleet",
+                    managerID, String.format("%s %s (vin=%d)", vehicle.getManufacturer(), vehicle.getModel(), vehicle.getVIN()));
+            // create log entry and add it to log manager
+            logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.CAR_ADDED));
+        } else {
+            // do something
+        }
     }
 
-    public void removeVehicleFromLot(int managerID) {
+    public void removeVehicleFromLot(int managerID, int vin) {
+        Vehicle vehicle = vehicleByVinBST.searchByKey(vin);
+        if(managerID == manager.getStaffID()){
+            vehicleByVinBST.delete(vin);
+            availableVehicleLL.delete(vehicle);
+            rateByVinBST.delete(vin);
+
+            String logMessage = String.format("Manager (%d) removed %s from the fleet",
+                    managerID, String.format("%s %s (vin=%d)", vehicle.getManufacturer(), vehicle.getModel(), vehicle.getVIN()));
+            logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.CAR_REMOVED));
+        } else{
+            // do something
+        }
     }
 }
