@@ -1,7 +1,7 @@
 package rental;
 
 import client.Client;
-import edu.augie.finalProgram.taye.Vehicles.Vehicle;
+import edu.augie.finalProgram.taye.Vehicle;
 import staff.Employee;
 import java.time.LocalDateTime;
 
