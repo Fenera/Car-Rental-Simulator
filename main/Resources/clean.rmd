@@ -14,6 +14,7 @@ data[data$Seats == "2+2", c("Seats")] <- 4
 
 data$MPG = gsub("[^0-9\\.]", "", data$MPG)
 data$FuelTank = gsub("[^0-9\\.]", "", data$FuelTank)
+data$Cars.Prices = gsub("[^0-9\\.]", "", data$Cars.Prices)
 data$VIN = sample(1000:9999, 94, replace = FALSE)
 # if car is >$100,000, inventory = 1, else inventory = 1,2,or 3
 
@@ -50,7 +51,7 @@ data <- data %>%
       Fuel.Types %in% c("Diesel", "Petrol") ~ "Gas",
       Fuel.Types == "Hybrid" ~ "Hybrid",
       Fuel.Types == "Electric" ~ "Electric",
-      Fuel.Types == "Plug-in Hybrid" ~ "Plug-In",
+      Fuel.Types == "PIH" ~ "Plug-In",
       TRUE ~ NA_character_)
     ,
     cargo_capacity = case_when(
@@ -97,7 +98,11 @@ data <- data %>%
       Fuel.Types =="Electric" ~ sample(c(50, 55, 70, 85, 95, 100),
                                          size = n(),
                                          replace = TRUE),
-    TRUE ~ NA))
+    TRUE ~ NA),
+    # if a car is worth > 75k, the hourly rate is 0.5% of msrp, else 0.3% (arbitrary numbers)
+    hourlyRate = ifelse(as.numeric(Cars.Prices) > 75000,
+                        as.numeric(Cars.Prices) * 0.003,
+                        as.numeric(Cars.Prices) * 0.002))
 
 
 ```
