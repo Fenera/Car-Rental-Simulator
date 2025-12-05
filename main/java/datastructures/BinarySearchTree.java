@@ -119,10 +119,11 @@ public class BinarySearchTree <T extends Comparable<T>, V> {
             if(root == null) return null; // BST is empty
             Node temp = root; // temporary variable that points to root
             while(temp != null){
+                int compare = key.compareTo((T) temp.key);
                 // key is larger than temp's key (to the right of)
-                if((int) key > (int) temp.key){ // convert generic to int for statement to work
+                if(compare > 0){
                     temp = temp.right; // shift temp to right node
-                } else if ((int) key < (int) temp.key){ // key is less than temp key(to the left of)
+                } else if (compare < 0){ // key is less than temp key(to the left of)
                     temp = temp.left; // shift temp to the left;
                 } else{ // key is not less than/more than temp so it is EQUAL
                     return (V) temp.value;
