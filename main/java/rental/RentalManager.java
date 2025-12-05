@@ -3,9 +3,12 @@ package rental;
 import client.Client;
 import datastructures.LinkedList;
 import datastructures.LinkedList2;
-import edu.augie.finalProgram.taye.Vehicles.Vehicle;
+import edu.augie.finalProgram.taye.Vehicle;
 import fleet.Fleet;
 import staff.Employee;
+import utilities.LogEntry;
+import utilities.LogManager;
+import utilities.LogType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,14 +24,17 @@ public class RentalManager {
     private Fleet fleet;
     private Employee employee; // stores the employee renting out the car
     private Client customer; // stores the customer renting the car
-    LinkedList2<Integer, Rental> activeRentals; // stores active rentals
-    LinkedList2<Integer, Rental> rentalEmployee;
-    LinkedList<Rental> rentalHistory; // stores all rentals (active + past)
+    private LinkedList2<Integer, Rental> activeRentals; // stores active rentals
+    private LinkedList2<Integer, Rental> rentalEmployee;
+    private LinkedList<Rental> rentalHistory; // stores all rentals (active + past)
     private static int rentalID = 0; // unique id (static so not tied to object)
+    private LogManager logManager;
 
 
-    public RentalManager(Fleet fleet){
+
+    public RentalManager(Fleet fleet, LogManager logManager){
         this.fleet = fleet;
+        this.logManager = logManager;
         activeRentals = new LinkedList2<>();
         rentalHistory = new LinkedList<>();
         rentalEmployee = new LinkedList2<>();
@@ -52,20 +58,27 @@ public class RentalManager {
 
         activeRentals.append(vin, rental);
         rentalHistory.append(rental);
+        String logMessage = String.format("EmployeeID: %d ==RENTED== %s ==TO== ClientID: %d",
+                employee.getStaffID(), String.format("%s %s (vin=%d)"), vehicle.getManufacturer(), vehicle.getModel(), vin,
+                client.getClientID());
 
+        logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.CAR_RENTED));
 
         return rental;
     }
 
-    public void returnVehicle(int vin, int milesDriven){
+    public void returnVehicle(Employee employee, Client client, int vin, int milesDriven){
         /*
         * Check if vehicle is rented (in LL) -> add mileage -> mark as available -> remove from rentedVehicle -> add to activity log*/
         fleet.getVehicleByVin(vin).setOdometer(milesDriven);
-        Rental remove = activeRentals.removeByValue(vin); // remove the rental from active rentals
-    }
 
-    public double calculateRentalCost(Vehicle v, int milesDriven, int daysRented){
-        return 0.0;
+        Rental remove = activeRentals.removeByValue(vin); // remove the rental from active rentals
+
+        String logMessage = String.format("ClientID: %d ==RETURNED== %s ==TO== EmployeeID: %d",
+                client.getClientID(), String.format("%s %s (vin=%d)",
+                        remove.getVehicle().getManufacturer(), remove.getVehicle().getModel(), vin),
+                employee.getStaffID());
+        logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.CAR_RETURNED));
     }
 
     public LinkedList2<Integer, Rental> getAllActiveRentals(){
