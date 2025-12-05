@@ -12,6 +12,10 @@ package datastructures;
 *
 * Source accessed: https://stackoverflow.com/questions/47510048/printing-java-binary-search-tree
 * Date: 12/4
+*
+* Source accessed: https://medium.com/swlh/java-how-to-delete-a-node-in-binary-search-tree-aa2d4befe728
+* & https://www.digitalocean.com/community/tutorials/binary-search-tree-bst-search-insert-remove
+* Date: 12/5
 * */
 
 public class BinarySearchTree <T extends Comparable<T>, V> {
