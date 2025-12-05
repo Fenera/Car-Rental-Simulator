@@ -9,7 +9,7 @@ public class Hatchback extends Vehicle {
                Powertrain powertrain, double cargoCapacity, int horsePower) {
 
         super(VIN, manufacturer, model, year, odometer, color,
-                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower);
+                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower, true);
 
         this.cargoCapacity = cargoCapacity;
     }
