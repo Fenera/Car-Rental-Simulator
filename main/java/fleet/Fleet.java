@@ -10,6 +10,7 @@ import utilities.ReadCSV;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -35,190 +36,218 @@ public class Fleet {
         this.logManager = logManager;
     }
 
-    public void loadFromFile(String file) throws IOException {
-        ReadCSV reader = new ReadCSV(file);
-        List<String[]> vehicles = reader.readAll();
+    public void loadCarsFromFile(String file) throws IOException {
+        ReadCSV reader = new ReadCSV(file); // create ReadCSV object
+        List<String[]> vehicles = reader.readAll(); // readAll creates a List of arrays(rows)
 
-        for(String[] r: vehicles){ // iterate through the rows
+        for(int i = 1; i < vehicles.size(); i++) { // iterate through the rows (skip the first row with i=1 -> i=0 is header)
+            String[] r = vehicles.get(i); // get row array
 
-            // general vehicle attributes
-            // get data from file and store in variables
-            int year = 2025;
-            String manufacturer = r[1]; // r[0] is row number so start at r[1]
-            String model = r[2];
-            String engine = r[3];
-            int horsepower = Integer.valueOf(r[4]);
-            int topSpeedMPH = (int) (Integer.valueOf(r[5]) * 0.621371); // convert kmh to mph and convert to int
-            double zeroSixty = Double.valueOf(r[6]);
-            int priceMSRP = Integer.valueOf(r[7]);
-            String fuel = r[8];
-            int numberOfSeats = Integer.valueOf(r[9]);
-            String vehicleClass = r[10]; // SUV, Sedan..
-            double fuelEconomy = Double.valueOf(r[11]);
-            double gasTankSize = Double.valueOf(r[12]);
-            int vinNumber = Integer.valueOf(r[13]);
-            int inventory = Integer.valueOf(r[14]); // not implemented
-            int odometer = Integer.valueOf(r[15]);
-            String color = r[16];
-            int numberDoors = Integer.valueOf(r[17]);
-            boolean awd = r[18].equals("TRUE");
-            String fuelClass = r[19]; // GAS, Electric, Plug-In (hybrid), Hybrid
+            for (int j = 1; j < r.length; j++) {
+                // general vehicle attributes
+                // get data from file and store in variables
+
+                /*
+                 * raw variable is used to make converting String -> int (avoids NumberFormatException)
+                 * */
+
+                String raw = r[j].trim(); // this raw is for ints in string form (i.e. 364 hp) or doubles in string form
+
+                // avoid NA and blanks
+                if(!raw.equalsIgnoreCase("NA") || raw.isBlank()) {
+
+                    // all the indexes (columns) that contain int values
+                    int intValue = 0;
+                    double doubleValue = 0.0;
+                    if (j == 4 || j == 5 || j == 7 || j == 9 || j == 13 || j == 14
+                            || j == 15 || j == 17 || j == 22 || j == 23 || j == 27 || j == 28) {
+                        raw = raw.replaceAll("[^0-9]", "");
+                        intValue = Integer.parseInt(raw);
+                    }
+                    // all indexes (columns) that contain double values
+                    if (j == 6 || j == 11 || j == 12 || j == 20 || j == 21 || j == 25 || j == 26 || j == 29) {
+                        raw = raw.replaceAll("[^0-9]", "");
+                        doubleValue = Double.parseDouble(raw);
+                    }
+
+                    int year = 2025;
+                    String manufacturer = r[1].trim(); // r[0] is row number so start at r[1]
+                    String model = r[2].trim();
+                    String engine = r[3].trim();
+                    int horsepower = intValue;
+                    int topSpeedMPH = (int) (intValue * 0.621371); // convert kmh to mph and convert to int
+                    double zeroSixty = doubleValue;
+                    int priceMSRP = intValue;
+                    String fuel = r[8].trim();
+                    int numberOfSeats = intValue;
+                    String vehicleClass = r[10].trim(); // SUV, Sedan..
+                    double fuelEconomy = doubleValue;
+                    double gasTankSize = doubleValue;
+                    int vinNumber = intValue;
+                    int inventory = intValue; // not implemented
+                    int odometer = intValue;
+                    String color = r[16].trim();
+                    int numberDoors = intValue;
+                    boolean awd = r[18].trim().equals("TRUE");
+                    String fuelClass = r[19].trim(); // GAS, Electric, Plug-In (hybrid), Hybrid
 
 
-            // Update in the future (if needed)
-            String conditionReport = "";
+                    // Update in the future (if needed)
+                    String conditionReport = "";
 
-            // vehicle class-specific attributes (i.e. bed length for trucks)
+                    // vehicle class-specific attributes (i.e. bed length for trucks)
 
-            double cargoCapacity = Double.valueOf(r[20]);
-            double towingCapacity = Double.valueOf(r[21]);
-            int standingCapacity = Integer.valueOf(r[22]);
-            int length = Integer.valueOf(r[23]);
-            boolean accessibleRamp = r[24].equals("TRUE");
-            double trunkVolume = Double.valueOf(r[25]);
-            double bedLength = Double.valueOf(r[26]);
-            int maxRange = Integer.valueOf(r[27]);
-            int batteryHealth = Integer.valueOf(r[28]);
-            double dailyRate = Double.valueOf(r[29]); // ($/day)
-
-
-            Vehicle vehicle; // instantiate Vehicle object
+                    double cargoCapacity = doubleValue;
+                    double towingCapacity = doubleValue;
+                    int standingCapacity = intValue;
+                    int length = intValue;
+                    boolean accessibleRamp = r[24].trim().equals("TRUE");
+                    double trunkVolume = doubleValue;
+                    double bedLength = doubleValue;
+                    int maxRange = intValue;
+                    int batteryHealth = intValue;
+                    double dailyRate = Double.valueOf(r[29]); // ($/day)
 
 
-            // determine the class of the vehicle to create appropriate object (SUV, Sedan...)
-            // determine the fuel classes of these vehicles to have the right arguments for creating the Vehicle objects
+                    Vehicle vehicle; // instantiate Vehicle object
 
-            if(vehicleClass.equals("SUV")){
-                if(Objects.equals(fuelClass, "Gas")) {
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Hybrid")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Plug-In")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Electric")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
-                } else{
-                    continue; // skip the current iteration if fuelClass is invalid
+
+                    // determine the class of the vehicle to create appropriate object (SUV, Sedan...)
+                    // determine the fuel classes of these vehicles to have the right arguments for creating the Vehicle objects
+
+                    if (vehicleClass.equals("SUV")) {
+                        if (Objects.equals(fuelClass, "Gas")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Hybrid")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Plug-In")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Electric")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
+                        } else {
+                            continue; // skip the current iteration if fuelClass is invalid
+                        }
+                    } else if (vehicleClass.equals("Sedan")) {
+                        if (Objects.equals(fuelClass, "Gas")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Hybrid")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Plug-In")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Electric")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
+                        } else {
+                            continue; // skip the current iteration if fuelClass is invalid
+                        }
+                    } else if (vehicleClass.equals("Coupe")) {
+                        if (Objects.equals(fuelClass, "Gas")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Hybrid")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Plug-In")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Electric")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
+                        } else {
+                            continue; // skip the current iteration if fuelClass is invalid
+                        }
+                    } else if (vehicleClass.equals("Bus")) {
+                        if (Objects.equals(fuelClass, "Gas")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Hybrid")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Plug-In")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Electric")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
+                        } else {
+                            continue; // skip the current iteration if fuelClass is invalid
+                        }
+                    } else if (vehicleClass.equals("Truck")) {
+                        if (Objects.equals(fuelClass, "Gas")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Hybrid")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Plug-In")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Electric")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
+                        } else {
+                            continue; // skip the current iteration if fuelClass is invalid
+                        }
+                    } else if (vehicleClass.equals("Van")) {
+                        if (Objects.equals(fuelClass, "Gas")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Hybrid")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Plug-In")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
+                        } else if (Objects.equals(fuelClass, "Electric")) {
+                            vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
+                                    numberOfSeats, conditionReport, numberDoors, awd,
+                                    new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
+                        } else {
+                            continue; // skip the current iteration if fuelClass is invalid
+                        }
+                    } else {
+                        throw new RuntimeException("The car cannot be added to the fleet");
+                    }
+
+                    vehicleByVinBST.insert(vinNumber, vehicle); // insert the vin and vehicle into the BST
+                    rateByVinBST.insert(vinNumber, dailyRate);
+                    availableVehicleLL.append(vehicle);
+                    /*
+                     * to do: Add Vehicle objects to LL
+                     *  else gas, plugIN, hybrid, electric....
+                     * */
                 }
-            } else if(vehicleClass.equals("Sedan")){
-                if(Objects.equals(fuelClass, "Gas")) {
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Hybrid")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Plug-In")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Electric")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
-                } else{
-                    continue; // skip the current iteration if fuelClass is invalid
-                }
-            }   else if(vehicleClass.equals("Coupe")){
-                if(Objects.equals(fuelClass, "Gas")) {
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Hybrid")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Plug-In")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Electric")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
-                } else{
-                    continue; // skip the current iteration if fuelClass is invalid
-                }
-            }   else if(vehicleClass.equals("Bus")){
-                if(Objects.equals(fuelClass, "Gas")) {
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Hybrid")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Plug-In")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Electric")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
-                } else{
-                    continue; // skip the current iteration if fuelClass is invalid
-                }
-            }   else if(vehicleClass.equals("Truck")){
-                if(Objects.equals(fuelClass, "Gas")) {
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Hybrid")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Plug-In")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Electric")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
-                } else{
-                    continue; // skip the current iteration if fuelClass is invalid
-                }
-            }   else if(vehicleClass.equals("Van")){
-                if(Objects.equals(fuelClass, "Gas")) {
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new GasMotor(fuel, fuelEconomy, engine, gasTankSize), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Hybrid")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new HybridMotor(fuelEconomy, gasTankSize, engine, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Plug-In")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new PlugInHybrid(fuelEconomy, gasTankSize, fuel), horsepower, cargoCapacity, towingCapacity);
-                } else if(Objects.equals(fuelClass, "Electric")){
-                    vehicle = new SUV(vinNumber, manufacturer, model, year, odometer, color,
-                            numberOfSeats, conditionReport, numberDoors, awd,
-                            new ElectricMotor(maxRange, batteryHealth), horsepower, cargoCapacity, towingCapacity);
-                } else{
-                    continue; // skip the current iteration if fuelClass is invalid
-                }
-            } else{
-                throw new RuntimeException("The car cannot be added to the fleet");
             }
-
-            vehicleByVinBST.insert(vinNumber, vehicle); // insert the vin and vehicle into the BST
-            rateByVinBST.insert(vinNumber, dailyRate);
-            availableVehicleLL.append(vehicle);
-            /*
-            * to do: Add Vehicle objects to LL
-            *  else gas, plugIN, hybrid, electric....
-            * */
         }
     }
 
@@ -269,5 +298,128 @@ public class Fleet {
         } else{
             // do something
         }
+    }
+
+    public void filterByBodyType(String bodyType){
+        // prints out all cars that have a certain body type
+
+        for(Iterator<Vehicle> it = availableVehicleLL.items(); it.hasNext();){ // iterate through vehicles
+            Vehicle vehicle = it.next();
+            if(vehicle.getBodyType().equalsIgnoreCase(bodyType)){ // check if body type input match with method output
+                System.out.println(vehicle); // print the vehicle
+            }
+
+        }
+    }
+
+    public void showAvailableCars(){
+        // shows all cars that are available
+        for(Iterator<Vehicle> it = availableVehicleLL.items(); it.hasNext();){ // iterate through vehicles
+            Vehicle vehicle = it.next();
+            System.out.println(vehicle);
+        }
+    }
+
+    public int filterByPriceRange(double lowerLimit, double upperLimit){
+        // Filter cars with daily rates between the two limits
+
+        int count = 0; // counts the number of cars that meet this criteria
+        for(Iterator<Vehicle> it = availableVehicleLL.items(); it.hasNext();){
+            Vehicle vehicle = it.next(); // vehicle in available vehicles linked list
+            double dailyRate = rateByVinBST.searchByKey(vehicle.getVIN()); // daily rate of vehicle
+            if(dailyRate >= lowerLimit && dailyRate <= upperLimit){
+                count ++;
+                System.out.println(vehicle);
+            }
+        }
+
+        return count;
+    }
+
+    public int filterByHorsePower(double lowerLimit, double upperLimit){
+        // Filter cars with horsepower between the two limits
+
+        int count = 0; // counts the number of cars that meet this criteria
+        for(Iterator<Vehicle> it = availableVehicleLL.items(); it.hasNext();){
+            Vehicle vehicle = it.next(); // vehicle in available vehicles linked list
+            int horsepower = vehicle.getHorsePower();
+
+            if(horsepower >= lowerLimit && horsepower <= upperLimit){
+                count ++;
+                System.out.println(vehicle);
+            }
+        }
+
+        return count;
+    }
+
+    public int filterByMPG(double lowerLimit, double upperLimit){
+        // Filter cars with horsepower between the two limits
+
+        int count = 0; // counts the number of cars that meet this criteria
+        for(Iterator<Vehicle> it = availableVehicleLL.items(); it.hasNext();) {
+            Vehicle vehicle = it.next(); // vehicle in available vehicles linked list
+            Powertrain pt = vehicle.getPowertrain(); // get the powertrain of the vehicle
+            double mpg;
+
+            // see if the powertrains are instances of these motors that contain fuel economy (mpg)
+            // get the mpg
+            if (pt instanceof GasMotor) {
+                GasMotor motor = (GasMotor) pt;
+                mpg = motor.getFuelEfficiency();
+                count++;
+            } else if (pt instanceof HybridMotor) {
+                HybridMotor motor = (HybridMotor) pt;
+                mpg = motor.getFuelEfficiency();
+                count++;
+            } else if (pt instanceof PlugInHybrid) {
+                PlugInHybrid motor = (PlugInHybrid) pt;
+                mpg = motor.getFuelEfficiency();
+                count++;
+            } else {
+                continue;
+            }
+            if (mpg >= lowerLimit && mpg <= upperLimit) {
+                System.out.println(vehicle);
+            }
+        }
+        return count;
+    }
+
+    public int filterByFuelType(String gasType){
+        // filter the cars by their gas type (petrol, diesel, electric, hybrid...)
+        int count = 0; // counts the number of cars that meet this criteria
+        for(Iterator<Vehicle> it = availableVehicleLL.items(); it.hasNext();) {
+            Vehicle vehicle = it.next(); // vehicle in available vehicles linked list
+            Powertrain pt = vehicle.getPowertrain(); // get the powertrain of the vehicle
+            String gas;
+
+            // see if the powertrains are instances of these motors that contain fuel economy (mpg)
+            // get the mpg
+            if (pt instanceof GasMotor) {
+                GasMotor motor = (GasMotor) pt;
+                gas = motor.getFuelType();
+                count++;
+            } else if (pt instanceof HybridMotor) {
+                HybridMotor motor = (HybridMotor) pt;
+                gas = motor.getFuelType();
+                count++;
+            } else if (pt instanceof PlugInHybrid) {
+                PlugInHybrid motor = (PlugInHybrid) pt;
+                gas = motor.getFuelType();
+                count++;
+            }  else if(pt instanceof ElectricMotor){
+                ElectricMotor motor = (ElectricMotor) pt;
+                gas = motor.getFuelType();
+            }
+            else {
+                continue;
+            }
+            if(gas.equalsIgnoreCase(gasType)){
+                System.out.println(vehicle);
+            }
+        }
+        return count;
+
     }
 }
