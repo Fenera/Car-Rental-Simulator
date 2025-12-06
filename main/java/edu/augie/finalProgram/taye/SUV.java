@@ -35,4 +35,9 @@ public class SUV extends Vehicle {
     public boolean canTow(double weight){
         return weight <= towingCapacity;
     }
+
+    // implementation of abstract method
+    public String getBodyType(){
+        return "SUV";
+    }
 }

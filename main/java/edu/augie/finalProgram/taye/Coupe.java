@@ -9,5 +9,10 @@ public class Coupe extends Vehicle{
                 seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower, true);
     }
 
+    // implementation of abstract method
+    public String getBodyType(){
+        return "Coupe";
+    }
+
 
 }

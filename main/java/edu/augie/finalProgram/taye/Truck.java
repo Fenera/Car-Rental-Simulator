@@ -37,4 +37,9 @@ public class Truck extends Vehicle {
     public boolean isOverLoaded(double weight){
         return weight > towingCapacity;
     }
+
+    // implementation of abstract method
+    public String getBodyType(){
+        return "Truck";
+    }
 }

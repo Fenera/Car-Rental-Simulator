@@ -31,4 +31,9 @@ public class Convertible extends Vehicle{
     public void setSoftTop(boolean softTop) {
         this.softTop = softTop;
     }
+
+    // implementation of abstract method
+    public String getBodyType(){
+        return "Convertible";
+    }
 }

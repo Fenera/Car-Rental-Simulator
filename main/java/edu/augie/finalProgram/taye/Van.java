@@ -30,4 +30,9 @@ public class Van extends Vehicle{
     public void setTowingCapacity(double towingCapacity) {
         this.towingCapacity = towingCapacity;
     }
+
+    // implementation of abstract method
+    public String getBodyType(){
+        return "Van";
+    }
 }

@@ -53,4 +53,9 @@ public class Bus extends Vehicle{
     public void setAccessibleRamp(boolean accessibleRamp) {
         this.accessibleRamp = accessibleRamp;
     }
+
+    // implementation of abstract method
+    public String getBodyType(){
+        return "Bus";
+    }
 }

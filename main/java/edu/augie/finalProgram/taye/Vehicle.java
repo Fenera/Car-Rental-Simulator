@@ -185,5 +185,7 @@ public abstract class Vehicle {
                 "powertrain=" + powertrain +
                 '}';
     }
+
+    public abstract String getBodyType();
 }
 

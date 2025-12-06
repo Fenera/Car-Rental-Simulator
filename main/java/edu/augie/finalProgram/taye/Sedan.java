@@ -27,5 +27,10 @@ public class Sedan extends Vehicle {
     public void setTrunkVolume(double trunkVolume) {
         this.trunkVolume = trunkVolume;
     }
+
+    // implementation of abstract method
+    public String getBodyType(){
+        return "Sedan";
+    }
 }
 
