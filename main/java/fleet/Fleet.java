@@ -450,4 +450,13 @@ public class Fleet {
         }
         return count;
     }
+
+    public void printTestCar(){
+        Vehicle testVehicle = new SUV(1, "Toyota", "RAV4", 2025, 0, "Red", 5, "", 4, false,
+                new GasMotor("Petrol", 25, "2.5L", 14), 200, 500, 2000);
+        availableVehicleLL.append(testVehicle);
+        System.out.println(availableVehicleLL.getHead());
+    }
+
+
 }
