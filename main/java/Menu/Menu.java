@@ -33,9 +33,9 @@ public class Menu {
     public void mainMenu(){
         while(true) {
             try {
-                System.out.println("Welcome to Rent-A-Car!");
+                System.out.println("\n\nWelcome to Rent-A-Car!\n\n");
 
-                System.out.printf("%nSelect user type: %n1) %s," +
+                System.out.printf("%nSelect user type: %n1) %s" +
                                 "%n2) %s" +
                                 "%n3) %s" +
                                 "%n4) %s%n",
@@ -44,6 +44,8 @@ public class Menu {
                 System.out.print("Enter choice number: ");
 
                 int choice = input.nextInt(); // get user's choice
+
+                input.nextLine();
 
                 switch (choice) { // determine method call
                     case 1:
@@ -59,7 +61,6 @@ public class Menu {
                         exit();
                         return;
                     default:
-                        System.out.println("You entered an invalid number. Try again");
                         pause();
                 }
             } catch (InputMismatchException e) {
@@ -78,7 +79,10 @@ public class Menu {
                 // this loop is for the first input (customer menu)
                 // if the user enters an invalid input, the default allows this loop to continue, the case statements break out of this loop (valid input)
 
-                System.out.println("Customer Menu");
+                System.out.println("\n\n" +
+                        "====================================\n" +
+                        "          CUSTOMER MENU\n" +
+                        "====================================");
 
                 System.out.printf("%n1) %s," +
                                 "%n2) %s" +
@@ -88,7 +92,7 @@ public class Menu {
                                 "%n6) %s" +
                                 "%n7) %s" +
                                 "%n8) %s%n",
-                        "View all available vehicles", "Search vehicles by vin", "Filter vehicles by type (SUV, Sedan, Truck), " +
+                        "View all available vehicles", "Search vehicles by VIN", "Filter vehicles by type (SUV, Sedan, Truck)",
                                 "Filter vehicles by price range", "Filter vehicles by horsepower, mpg, or gas type", "View vehicle details",
                         "Rent a vehicle", "Return to main menu");
 
@@ -98,13 +102,21 @@ public class Menu {
                 switch (choice) {
                     case 1: // show all vehicles
                         fleet.showAvailableCars();
+                        input.nextLine();
                         break;
 
                     case 2: // search vehicles by vin
                         System.out.println("Search vehicles by vin\n");
                         System.out.print("Enter the vehicles VIN: ");
                         int vin = input.nextInt();
-                        System.out.println(fleet.getVehicleByVin(vin)); // print the vehicle with that vin (Vehicle has custom toString())
+
+                        Vehicle v = fleet.getVehicleByVin(vin); // get vehicle from bst
+                        if(v != null){
+                            System.out.println(v);
+                        } else{
+                            System.out.println("Vehicle not found");
+                        }
+                        input.nextLine();
                         break;
 
                     case 3: // Filter vehicles by type (SUV, Sedan, Truck, etc.)
@@ -143,14 +155,14 @@ public class Menu {
                                 }
                                 break; // break out of loop
                             }
-                        }
+                        }break;
                     case 5:
 
                         while (true) {
                             System.out.printf("Filter by: 1) %s%n" +
                                     "2) %s%n" +
                                     "3) %s%n" +
-                                    "4) %s%n", "Horsepower", "Fuel Economy (mpg)", "Gas Type (Petrol, Diesel, Electric..)");
+                                    "Horsepower", "Fuel Economy (mpg)", "Gas Type (Petrol, Diesel, Electric..)");
 
                             System.out.println();
                             System.out.print("Enter choice number: ");
@@ -261,12 +273,14 @@ public class Menu {
                             System.out.println();
                             System.out.print("Enter the vin of the car you chose: ");
                             int vinNumber2 = input.nextInt();
+                            input.nextLine();
 
                             Vehicle vehicle = fleet.getVehicleByVin(vinNumber2);
 
                             System.out.println();
                             System.out.print("How many days do you want to rent the car for: ");
                             int days = input.nextInt();
+                            input.nextLine();
 
                             // since we are a client, the employee object doesn't really matter so just create one
                             Employee employee = new Employee("Computer", "dr@ebrown.org", "555-555-5555",
@@ -282,7 +296,8 @@ public class Menu {
 
                         }
                     case 8:
-                        return; // returns to main menu
+                        mainMenu(); // returns to main menu
+                        break;
                 }
             }
         } catch(InputMismatchException e){
@@ -291,6 +306,13 @@ public class Menu {
     }
 
     private void employeeMenu(){
+        while(true) {
+            System.out.println("" +
+                    "====================================\n" +
+                    "          EMPLOYEE MENU\n" +
+                    "====================================");
+
+        }
     }
 
     private void managerMenu(){
@@ -306,7 +328,7 @@ public class Menu {
     }
 
     private void pause(){ // this method pauses to program until the user is ready to continue (pressing enter)
-        System.out.println("You entered invalid input. Press enter to continue");
+        System.out.println("\nYou entered invalid input. Press enter to continue\n");
         input.nextLine();
     }
 }
