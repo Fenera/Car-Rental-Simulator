@@ -41,9 +41,6 @@ data <- data[, -which(names(data) == "Torque")] # remove columns that are not ne
 data$Cars.Prices <- gsub(",", "", data$Cars.Prices) # remove commas to not get it confused when split by comma
 
 
-write.csv(data, "carsData2025.csv")
-
-
 # added more attributes
 data <- data %>%
   mutate(
@@ -69,12 +66,12 @@ data <- data %>%
     # following 3 attributes are for Bus class
     standing_capacity = 150,
     length = case_when(
-      BodyType == "BUS" ~ sample(c(40,50,60),
+      BodyType == "Bus" ~ sample(c(40,50,60),
                     size = n(),
                     replace = TRUE),
       TRUE ~ NA), # length in feet
     accessible_ramp = case_when(
-      BodyType == "BUS" ~ TRUE,
+      BodyType == "Bus" ~ TRUE,
       TRUE ~ NA),
     trunkVolume = case_when(
       BodyType == "Sedan" ~ sample(c(12, 15, 20), # in cubic feet
@@ -104,6 +101,8 @@ data <- data %>%
                         as.numeric(Cars.Prices) * 0.003,
                         as.numeric(Cars.Prices) * 0.002))
 
+
+write.csv(data, "carsData2025.csv")
 
 ```
 
