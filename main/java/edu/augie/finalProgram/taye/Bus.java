@@ -18,6 +18,12 @@ public class Bus extends Vehicle{
         this.length = length;
         this.accessibleRamp = accessRamp;
     }
+    public Bus(int VIN, String manufacturer, String model, int year, int odometer, String color,
+               int seatingCapacity, String conditionReport, int numberOfDoors, boolean allWheelDrive,
+               Powertrain powertrain, int horsePower){
+        super(VIN, manufacturer, model, year, odometer, color,
+                seatingCapacity, conditionReport, numberOfDoors, allWheelDrive, powertrain, horsePower, true);
+    }
 
     public int getTotalCapacity(){
         return super.getSeatingCapacity() + standingCapacity;
