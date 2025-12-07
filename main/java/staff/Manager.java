@@ -60,7 +60,40 @@ public class Manager extends Staff {
         }
     }
 
-    public void viewPaymentLogs() {}
+    public Employee getEmployee(int staffID) {
+
+        // iterate through employee LL
+        for(Iterator<Employee> it = employeeLinkedList.items(); it.hasNext(); ){
+            Employee e = it.next(); // get employee
+            if(e.getStaffID() == staffID){ // check if the id matches the argument
+                return e;
+            }
+        }
+
+        return null; // no employee found with that id
+    }
+
+    public boolean containsStaffID(int staffID){
+        // see's if linked list contains an employee with that id
+        boolean contains = false;
+
+        for(Iterator<Employee> it = employeeLinkedList.items(); it.hasNext(); ){
+            Employee e = it.next(); // get employee
+            if(e.getStaffID() == staffID){ // check if the id matches the argument
+                contains = true;
+            }
+        }
+
+        return contains;
+    }
+
+    public void addEmployee(Employee employee){
+        employeeLinkedList.append(employee);
+    }
+    public void removeEmployee(int staffID){
+        Employee employee = getEmployee(staffID);
+        employeeLinkedList.delete(employee);
+    }
 
     @Override
     public String getInformation() {
