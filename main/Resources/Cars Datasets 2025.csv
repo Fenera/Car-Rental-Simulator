@@ -86,7 +86,7 @@ Kia,EV6 Wind,Electric Motor,77.4 kWh,225 hp,190 km/h,5.2 sec,"$50,000 ",Electric
 Acura,NSX Type S,Twin-Turbo V6 Hybrid,"3,493 cc (V6)",600 hp,307 km/h,2.9 sec,"$157,000 ",Hybrid,2,666 Nm,Sedan,21,15
 Acura,TLX PMC Edition,V6,"3,500 cc (V6)",290 hp,250 km/h,5.7 sec,"$62,000 ",Petrol,5,362 Nm,SUV,23,17
 Acura,MDX Advance,V6,"3,500 cc (V6)",290 hp,190 km/h,6.0 sec,"$60,000 ",Petrol,7,362 Nm,SUV,21,19
-Acura,RDX Technology,I4 Turbocharged,"1,500 cc (I4)",272 hp,210 km/h,6.6 sec,"$45,000 ",Petrol,5,400 Nm,Sedan,24,17
+Acura,RDX Technology,I4 Turbocharged,"1,500 cc (I4)",272 hp,210 km/h,6.6 sec,"$45,000 ",Petrol,5,400 Nm,SUV,24,17
 Acura,ILX Premium,I4,"2,400 cc (I4)",201 hp,200 km/h,6.6 sec,"$30,000 ",Petrol,5,180 Nm,Sedan,28,13
 Mazda,Mazda3,2.0L SkyActiv-G,"2,000 cc",155 hp,200 km/h,8.9 sec,"$22,000 ",Petrol,5,213 Nm,Sedan,31,14
 Mazda,Mazda3 Hatchback,2.5L SkyActiv-G,"2,500 cc",186 hp,210 km/h,8.3 sec,"$24,000 ",Petrol,5,252 Nm,Hatchback,30,14

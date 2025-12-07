@@ -63,15 +63,14 @@ data <- data %>%
       BodyType == "Truck" ~ 7700,
       TRUE ~ NA
     ),
-    # following 3 attributes are for Bus class
-    standing_capacity = 150,
+    # following 2 attributes are for Bus class
     length = case_when(
-      BodyType == "Bus" ~ sample(c(40,50,60),
+      BodyType == "BUS" ~ sample(c(40,50,60),
                     size = n(),
                     replace = TRUE),
       TRUE ~ NA), # length in feet
     accessible_ramp = case_when(
-      BodyType == "Bus" ~ TRUE,
+      BodyType == "BUS" ~ TRUE,
       TRUE ~ NA),
     trunkVolume = case_when(
       BodyType == "Sedan" ~ sample(c(12, 15, 20), # in cubic feet
