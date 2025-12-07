@@ -58,17 +58,6 @@ public class Fleet {
             int numberOfSeats = Integer.parseInt(temp);
             String vehicleClass = r[10].replace("\"", "").trim(); // removes quotes to avoid confusion between "car" and car
 
-//            if(vehicleClass.isEmpty() || !(vehicleClass.equalsIgnoreCase("SUV") ||
-//                    vehicleClass.equalsIgnoreCase("Sedan") ||
-//                    vehicleClass.equalsIgnoreCase("Coupe") ||
-//                    vehicleClass.equalsIgnoreCase("Convertible") ||
-//                    vehicleClass.equalsIgnoreCase("Truck") ||
-//                    vehicleClass.equalsIgnoreCase("Van") ||
-//                    vehicleClass.equalsIgnoreCase("Hatchback") ||
-//                    vehicleClass.equalsIgnoreCase("Bus"))){
-//                vehicleClass = "SUV";
-//            }
-
             temp = r[11].replaceAll("[^0-9.]", "").trim();
             if (temp.isEmpty()) temp = "0";
             double fuelEconomy = Double.parseDouble(temp);
@@ -318,7 +307,10 @@ public class Fleet {
     }
 
     public Vehicle getVehicleByVin(int vin){
-        return vehicleByVinBST.searchByKey(vin);
+        if(vehicleByVinBST.contains(vin)) {
+            return vehicleByVinBST.searchByKey(vin);
+        }
+        return null;
     }
 
     public double getRateByVin(int vin){
