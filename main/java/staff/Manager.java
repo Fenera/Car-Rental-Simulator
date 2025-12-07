@@ -9,12 +9,14 @@ import java.util.List;
 
 public class Manager extends Staff {
 
-    LinkedList<Employee> employeeLinkedList;
+    LinkedList<Employee> activeEmployeeLinkedList;
+    LinkedList<Employee> allTimeEmployeeLinkedList;
 
     public Manager(String name, String email, String phoneNumber, String address, int staffID) {
         super(name, email, phoneNumber, address, staffID);
 
-        employeeLinkedList = new LinkedList<>();
+        activeEmployeeLinkedList = new LinkedList<>();
+        allTimeEmployeeLinkedList = new LinkedList<>();
     }
 
     public void loadEmployeeFromFile(String path) throws IOException {
@@ -23,25 +25,35 @@ public class Manager extends Staff {
 
         // iterate through list (same logic as method in Fleet)
         // get data and assign it to variables
-        for(String[] rows: employees){
-            int staffID = Integer.valueOf(rows[2]);
-            String firstName = rows[3];
-            String lastName = rows[4];
-            String email = rows[5];
-            String phoneNumber = rows[6];
-            String address = rows[7];
+        for(int i = 1; i < employees.size(); i ++){ // start at i = 1 to skip title row
+            String[] rows = employees.get(i); // get the rows as a string arrays
+
+            String temp = rows[0].trim().replaceAll("^[0-9]\"", "");
+            int staffID = Integer.valueOf(temp);
+            String firstName = rows[1];
+            String lastName = rows[2];
+            String email = rows[3];
+            String phoneNumber = rows[4];
+            String address = rows[5];
             String name = firstName + " " + lastName;
 
             // create employee object and add it to employeeLinkedList
             // all employees in the list are initially active
-            employeeLinkedList.append(new Employee(name, email, phoneNumber, address, staffID, true));
+
+            Employee employee = new Employee(name, email, phoneNumber, address, staffID, true);
+            activeEmployeeLinkedList.append(employee);
+            allTimeEmployeeLinkedList.append(employee);
+
+            System.out.println("Added Employee: " + employee.getInformation());
         }
+
+        System.out.println("Finished loading " + activeEmployeeLinkedList.getLength() + " employees");
     }
 
     public void displayAllEmployees(){
         // display the information of all employees
         // iterate through employee LL using Iterator object
-        for(Iterator<Employee> it = employeeLinkedList.items(); it.hasNext(); ){
+        for(Iterator<Employee> it = activeEmployeeLinkedList.items(); it.hasNext(); ){
             Employee employee = it.next();
             System.out.println(employee); // Employee has custom toString()
         }
@@ -52,7 +64,7 @@ public class Manager extends Staff {
     public void viewEmployeeInfo(int staffID) {
 
         // iterate through employee LL
-        for(Iterator<Employee> it = employeeLinkedList.items(); it.hasNext(); ){
+        for(Iterator<Employee> it = activeEmployeeLinkedList.items(); it.hasNext(); ){
             Employee e = it.next(); // get employee
             if(e.getStaffID() == staffID){ // check if the id matches the argument
                 System.out.println(e); // print their information
@@ -63,7 +75,7 @@ public class Manager extends Staff {
     public Employee getEmployee(int staffID) {
 
         // iterate through employee LL
-        for(Iterator<Employee> it = employeeLinkedList.items(); it.hasNext(); ){
+        for(Iterator<Employee> it = activeEmployeeLinkedList.items(); it.hasNext(); ){
             Employee e = it.next(); // get employee
             if(e.getStaffID() == staffID){ // check if the id matches the argument
                 return e;
@@ -77,7 +89,7 @@ public class Manager extends Staff {
         // see's if linked list contains an employee with that id
         boolean contains = false;
 
-        for(Iterator<Employee> it = employeeLinkedList.items(); it.hasNext(); ){
+        for(Iterator<Employee> it = activeEmployeeLinkedList.items(); it.hasNext(); ){
             Employee e = it.next(); // get employee
             if(e.getStaffID() == staffID){ // check if the id matches the argument
                 contains = true;
@@ -88,11 +100,11 @@ public class Manager extends Staff {
     }
 
     public void addEmployee(Employee employee){
-        employeeLinkedList.append(employee);
+        activeEmployeeLinkedList.append(employee);
     }
     public void removeEmployee(int staffID){
         Employee employee = getEmployee(staffID);
-        employeeLinkedList.delete(employee);
+        activeEmployeeLinkedList.delete(employee);
     }
 
     @Override
