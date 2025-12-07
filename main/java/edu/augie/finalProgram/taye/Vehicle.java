@@ -169,7 +169,7 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
+        return "\nVehicle{" +
                 ", VIN=" + VIN +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", model='" + model + '\'' +

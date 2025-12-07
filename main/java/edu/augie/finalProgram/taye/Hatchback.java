@@ -21,4 +21,8 @@ public class Hatchback extends Vehicle {
     public void setCargoCapacity(double cargoCapacity) {
         this.cargoCapacity = cargoCapacity;
     }
+
+    public String getBodyType(){
+        return "Hatchback";
+    }
 }
