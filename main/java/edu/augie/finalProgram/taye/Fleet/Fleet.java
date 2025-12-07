@@ -1,12 +1,12 @@
-package edu.augie.finalProgram.taye.fleet;
+package edu.augie.finalProgram.taye.Fleet;
 import edu.augie.finalProgram.taye.Vehicle.*;
-import edu.augie.finalProgram.taye.datastructures.BinarySearchTree;
-import edu.augie.finalProgram.taye.datastructures.LinkedList;
-import edu.augie.finalProgram.taye.staff.Manager;
-import edu.augie.finalProgram.taye.utilities.LogEntry;
-import edu.augie.finalProgram.taye.utilities.LogManager;
-import edu.augie.finalProgram.taye.utilities.LogType;
-import edu.augie.finalProgram.taye.utilities.ReadCSV;
+import edu.augie.finalProgram.taye.DataStructures.BinarySearchTree;
+import edu.augie.finalProgram.taye.DataStructures.LinkedList;
+import edu.augie.finalProgram.taye.Staff.Manager;
+import edu.augie.finalProgram.taye.Utilities.LogEntry;
+import edu.augie.finalProgram.taye.Utilities.LogManager;
+import edu.augie.finalProgram.taye.Utilities.LogType;
+import edu.augie.finalProgram.taye.Utilities.ReadCSV;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -379,7 +379,7 @@ public class Fleet {
             availableVehicleLL.append(vehicle);
             rateByVinBST.insert(vehicle.getVIN(), dailyRate);
             // create an update log message
-            String logMessage = String.format("Manager (%d) added %s to the edu.augie.finalProgram.taye.fleet",
+            String logMessage = String.format("Manager (%d) added %s to the edu.augie.finalProgram.taye.Fleet",
                     managerID, String.format("%s %s (vin=%d)", vehicle.getManufacturer(), vehicle.getModel(), vehicle.getVIN()));
 
             // add message to the logManager with the current time and the action
@@ -399,7 +399,7 @@ public class Fleet {
             rateByVinBST.delete(vin);
 
             // create log message
-            String logMessage = String.format("Manager (%d) removed %s from the edu.augie.finalProgram.taye.fleet",
+            String logMessage = String.format("Manager (%d) removed %s from the edu.augie.finalProgram.taye.Fleet",
                     managerID, String.format("%s %s (vin=%d)", vehicle.getManufacturer(), vehicle.getModel(), vehicle.getVIN()));
 
             // add it to log manager

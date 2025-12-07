@@ -1,7 +1,7 @@
-package edu.augie.finalProgram.taye.staff;
+package edu.augie.finalProgram.taye.Staff;
 
-import edu.augie.finalProgram.taye.datastructures.LinkedList;
-import edu.augie.finalProgram.taye.utilities.ReadCSV;
+import edu.augie.finalProgram.taye.DataStructures.LinkedList;
+import edu.augie.finalProgram.taye.Utilities.ReadCSV;
 
 import java.io.IOException;
 import java.util.Iterator;

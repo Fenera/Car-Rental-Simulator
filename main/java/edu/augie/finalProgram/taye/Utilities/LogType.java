@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.utilities;
+package edu.augie.finalProgram.taye.Utilities;
 
 public enum LogType {
     CAR_RENTED,

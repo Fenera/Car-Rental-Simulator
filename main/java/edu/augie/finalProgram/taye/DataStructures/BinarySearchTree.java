@@ -1,8 +1,8 @@
-package edu.augie.finalProgram.taye.datastructures;
+package edu.augie.finalProgram.taye.DataStructures;
 
 // stores the cars
 // the value should be the VIN b/c every car has one
-// can also store edu.augie.finalProgram.taye.staff by their edu.augie.finalProgram.taye.staff ID number
+// can also store edu.augie.finalProgram.taye.Staff by their edu.augie.finalProgram.taye.Staff ID number
 
 
 // NOTE: values in a BST must be unique (in this case)

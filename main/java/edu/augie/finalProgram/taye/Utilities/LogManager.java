@@ -1,6 +1,6 @@
-package edu.augie.finalProgram.taye.utilities;
+package edu.augie.finalProgram.taye.Utilities;
 
-import edu.augie.finalProgram.taye.datastructures.LinkedList;
+import edu.augie.finalProgram.taye.DataStructures.LinkedList;
 
 import java.util.Iterator;
 

@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.datastructures;
+package edu.augie.finalProgram.taye.DataStructures;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

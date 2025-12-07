@@ -1,14 +1,14 @@
 package edu.augie.finalProgram.taye.Menu;
 
-import edu.augie.finalProgram.taye.client.Client;
+import edu.augie.finalProgram.taye.Client.Client;
 import edu.augie.finalProgram.taye.Vehicle.Vehicle;
-import edu.augie.finalProgram.taye.fleet.Fleet;
-import edu.augie.finalProgram.taye.fleet.VehicleMaker;
-import edu.augie.finalProgram.taye.rental.Rental;
-import edu.augie.finalProgram.taye.rental.RentalManager;
-import edu.augie.finalProgram.taye.staff.Employee;
-import edu.augie.finalProgram.taye.staff.Manager;
-import edu.augie.finalProgram.taye.utilities.LogManager;
+import edu.augie.finalProgram.taye.Fleet.Fleet;
+import edu.augie.finalProgram.taye.Fleet.VehicleMaker;
+import edu.augie.finalProgram.taye.Rental.Rental;
+import edu.augie.finalProgram.taye.Rental.RentalManager;
+import edu.augie.finalProgram.taye.Staff.Employee;
+import edu.augie.finalProgram.taye.Staff.Manager;
+import edu.augie.finalProgram.taye.Utilities.LogManager;
 
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
@@ -384,9 +384,9 @@ public class Menu {
                                         "%n6) %s" +
                                         "%n7) %s" +
                                         "%n8) %s%n",
-                                "View entire edu.augie.finalProgram.taye.fleet", "View logs",
-                                "Add new vehicle to edu.augie.finalProgram.taye.fleet",
-                                "Remove vehicle from edu.augie.finalProgram.taye.fleet",
+                                "View entire edu.augie.finalProgram.taye.Fleet", "View logs",
+                                "Add new vehicle to edu.augie.finalProgram.taye.Fleet",
+                                "Remove vehicle from edu.augie.finalProgram.taye.Fleet",
                                 "View all employees",
                                 "Add employee",
                                 "Remove employee", "Return to main menu");
@@ -398,7 +398,7 @@ public class Menu {
                         switch (choice) {
                             case 1:
                                 System.out.println("View Entire Fleet: \n\n");
-                                fleet.showInventory(); // prints all vehicles on edu.augie.finalProgram.taye.fleet (available & unavailable)
+                                fleet.showInventory(); // prints all vehicles on edu.augie.finalProgram.taye.Fleet (available & unavailable)
                                 System.out.println("\nPress enter to continue...");
                                 input.nextLine();
                                 break;
@@ -409,17 +409,17 @@ public class Menu {
                                 input.nextLine();
                                 break;
 
-                            case 3: // add new vehicle to edu.augie.finalProgram.taye.fleet
+                            case 3: // add new vehicle to edu.augie.finalProgram.taye.Fleet
 
                         try{
                                 while (true) {
                                     // get information about the vehicle
-                                    System.out.println("\n\nAdd new vehicle to edu.augie.finalProgram.taye.fleet\n");
+                                    System.out.println("\n\nAdd new vehicle to edu.augie.finalProgram.taye.Fleet\n");
                                     System.out.print("Enter the VIN of the vehicle: ");
                                     int vin = input.nextInt();
                                     input.nextLine();
 
-                                // see if vehicle is already in the edu.augie.finalProgram.taye.fleet
+                                // see if vehicle is already in the edu.augie.finalProgram.taye.Fleet
                                 // returns null if the vehicle is not in the lot
                                 if(fleet.getVehicleByVin(vin) == null) {
                                     System.out.println();
@@ -507,7 +507,7 @@ public class Menu {
                                         System.out.println(vehicle);
                                         break;
                                     } else{
-                                        System.out.println("\nVehicle is already present in the edu.augie.finalProgram.taye.fleet\n\n");
+                                        System.out.println("\nVehicle is already present in the edu.augie.finalProgram.taye.Fleet\n\n");
                                     }
                                 }
                         } catch(InputMismatchException e){
@@ -517,9 +517,9 @@ public class Menu {
                                 input.nextLine();
                                 break; // breaks out of switch-case
 
-                            case 4: // Remove vehicle from edu.augie.finalProgram.taye.fleet
+                            case 4: // Remove vehicle from edu.augie.finalProgram.taye.Fleet
                                 while (true) { // loop until the vin the user enter is valid
-                                    System.out.println("Remove the vehicle from the edu.augie.finalProgram.taye.fleet\n");
+                                    System.out.println("Remove the vehicle from the edu.augie.finalProgram.taye.Fleet\n");
                                     System.out.print("Enter the VIN of the vehicle: ");
                                     int vin = input.nextInt();
                                     input.nextLine();
@@ -626,10 +626,10 @@ public class Menu {
                                     "%n5) %s" +
                                     "%n6) %s" +
                                     "%n7) %s%n",
-                            "View vehicle edu.augie.finalProgram.taye.fleet", "View rented vehicles",
+                            "View vehicle edu.augie.finalProgram.taye.Fleet", "View rented vehicles",
                             "Rent a vehicle",
                             "Process return",
-                            "View edu.augie.finalProgram.taye.rental history",
+                            "View edu.augie.finalProgram.taye.Rental history",
                             "View rentals by VIN", "Return to main menu");
                     System.out.print("\n\nEnter choice number: ");
                     int choice = input.nextInt(); // get the user's choice
@@ -638,7 +638,7 @@ public class Menu {
                     switch (choice) {
                         case 1:
                             System.out.println("View Entire Fleet: \n\n");
-                            fleet.showInventory(); // prints all vehicles on edu.augie.finalProgram.taye.fleet (available & unavailable)
+                            fleet.showInventory(); // prints all vehicles on edu.augie.finalProgram.taye.Fleet (available & unavailable)
                             System.out.println("\nPress enter to continue...");
                             input.nextLine();
                             break;
@@ -650,7 +650,7 @@ public class Menu {
                             break;
                         case 3: // Rent a vehicle
                             while (true) {
-                                // get information about customer and edu.augie.finalProgram.taye.rental
+                                // get information about customer and edu.augie.finalProgram.taye.Rental
                                 System.out.println("Rent a vehicle\n");
                                 System.out.print("Enter the VIN of the vehicle: ");
                                 int vin = input.nextInt();
@@ -673,7 +673,7 @@ public class Menu {
                                 String address = input.nextLine();
 
                                 System.out.println();
-                                System.out.print("How many days is this edu.augie.finalProgram.taye.rental: ");
+                                System.out.print("How many days is this edu.augie.finalProgram.taye.Rental: ");
                                 int days = input.nextInt();
                                 input.nextLine();
 
@@ -704,7 +704,7 @@ public class Menu {
 
                         case 4: // Process a return
                             while (true) {
-                                // get vin of edu.augie.finalProgram.taye.rental vehicle
+                                // get vin of edu.augie.finalProgram.taye.Rental vehicle
                                 System.out.println("Process a return\n");
                                 System.out.print("Enter the VIN of the vehicle: ");
                                 int vin = input.nextInt();
@@ -715,11 +715,11 @@ public class Menu {
                                 // get Rental object of vehicle with that vin
                                 Rental rental = rentalManager.findActiveRentalsByVin(vin);
                                 if (!(vehicle == null)) {
-                                    if (!(rental == null)) { // edu.augie.finalProgram.taye.rental is null (method returned null bc vehicle is not rented now)
+                                    if (!(rental == null)) { // edu.augie.finalProgram.taye.Rental is null (method returned null bc vehicle is not rented now)
                                         rentalManager.returnVehicle(rental);
                                         break;
                                     } else {
-                                        System.out.println("The vehicle is not an active edu.augie.finalProgram.taye.rental");
+                                        System.out.println("The vehicle is not an active edu.augie.finalProgram.taye.Rental");
                                     }
                                 } else {
                                     System.out.println("The VIN you entered is invalid");
@@ -731,7 +731,7 @@ public class Menu {
 
                         case 5:
                             System.out.println("Rental History: \n\n");
-                            rentalManager.printRentalHistory(); // display the edu.augie.finalProgram.taye.rental history
+                            rentalManager.printRentalHistory(); // display the edu.augie.finalProgram.taye.Rental history
                             break;
                         case 6:
                             while (true) {

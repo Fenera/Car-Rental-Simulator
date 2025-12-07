@@ -1,11 +1,11 @@
-package edu.augie.finalProgram.taye.client;
+package edu.augie.finalProgram.taye.Client;
 
 /*
 * Client is the person renting the vehicle
-* This class is used to create a edu.augie.finalProgram.taye.client object
+* This class is used to create a edu.augie.finalProgram.taye.Client object
 * */
 public class Client {
-    // edu.augie.finalProgram.taye.client id is 999 so when a edu.augie.finalProgram.taye.client is made the id starts at 1000
+    // edu.augie.finalProgram.taye.Client id is 999 so when a edu.augie.finalProgram.taye.Client is made the id starts at 1000
     private static int clientID = 999;
     private String name;
     private String phoneNumber;

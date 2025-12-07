@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.staff;
+package edu.augie.finalProgram.taye.Staff;
 
 public class Employee extends Staff {
 

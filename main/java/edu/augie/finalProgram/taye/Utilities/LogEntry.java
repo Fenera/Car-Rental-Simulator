@@ -1,10 +1,10 @@
-package edu.augie.finalProgram.taye.utilities;
+package edu.augie.finalProgram.taye.Utilities;
 
 import java.time.LocalDateTime;
 
 // this is the update logger
 // writes to a text file in Output folder (below main folder)
-// write any update (car rented out, car returned, edu.augie.finalProgram.taye.staff sign-in, edu.augie.finalProgram.taye.client sign-in)
+// write any update (car rented out, car returned, edu.augie.finalProgram.taye.Staff sign-in, edu.augie.finalProgram.taye.Client sign-in)
 
 
 
@@ -19,7 +19,7 @@ public class LogEntry {
     * Title (i.e. New Rental, Check-in)
     * Message
     *Time
-    * Who: Client or edu.augie.finalProgram.taye.staff updated the log -> name, customerID, staffID, phone number
+    * Who: Client or edu.augie.finalProgram.taye.Staff updated the log -> name, customerID, staffID, phone number
     * output file: .txt file
     * */
 
