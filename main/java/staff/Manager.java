@@ -44,10 +44,12 @@ public class Manager extends Staff {
             activeEmployeeLinkedList.append(employee);
             allTimeEmployeeLinkedList.append(employee);
 
-            System.out.println("Added Employee: " + employee.getInformation());
+            // print statements below are for testing purposes
+
+            //System.out.println("Added Employee: " + employee.getInformation());
         }
 
-        System.out.println("Finished loading " + activeEmployeeLinkedList.getLength() + " employees");
+        //System.out.println("Finished loading " + activeEmployeeLinkedList.getLength() + " employees");
     }
 
     public void displayAllEmployees(){
@@ -55,7 +57,7 @@ public class Manager extends Staff {
         // iterate through employee LL using Iterator object
         for(Iterator<Employee> it = activeEmployeeLinkedList.items(); it.hasNext(); ){
             Employee employee = it.next();
-            System.out.println(employee); // Employee has custom toString()
+            System.out.println(employee.getInformation()); // Employee has custom toString()
         }
     }
 
@@ -67,7 +69,7 @@ public class Manager extends Staff {
         for(Iterator<Employee> it = activeEmployeeLinkedList.items(); it.hasNext(); ){
             Employee e = it.next(); // get employee
             if(e.getStaffID() == staffID){ // check if the id matches the argument
-                System.out.println(e); // print their information
+                System.out.println(e.getInformation()); // print their information
             }
         }
     }
