@@ -22,11 +22,9 @@ public class LinkedList <T>{
     private int length;
 
     public <T> LinkedList(){
-        // T value - parameter
-        //Node firstNode = new Node((Object) value); // create first node
-        //head = firstNode;
-        //tail = firstNode;
-        length = 1;
+        head = null;
+        tail = null;
+        length = 0;
     }
 
     public <T> Object getHead(){
@@ -201,7 +199,6 @@ public class LinkedList <T>{
         return new Iterator<T>() {
 
             Node current = head;
-
             @Override
             public boolean hasNext() {
                 return current != null;
@@ -254,9 +251,6 @@ public class LinkedList <T>{
         if(current != null){
             previous.next = current.next; // break off target node connection (previous points to node in front of current)
         }
-
-
     }
-
 }
 
