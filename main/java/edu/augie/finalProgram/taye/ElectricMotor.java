@@ -11,6 +11,10 @@ public class ElectricMotor implements Powertrain{
         this.batteryHealth = batteryHealth;
     }
 
+    public String getFuelType(){
+        return "Electric";
+    }
+
     @Override
     public double getRange(){
         return Math.round((double)(batteryHealth * maxRange));
