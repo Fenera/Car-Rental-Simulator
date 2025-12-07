@@ -48,15 +48,4 @@ public class ReadCSV {
         }
         return records;
     }
-
-    public List<String[]> cleanFormat(List<String[]> data){
-        for(String[] arr: data){ // iterate by rows (arrays)
-            for(int i = 0; i < arr.length; i++){
-                if(arr[i] != null) {
-                    arr[i] = arr[i].trim(); // remove whitespace
-                }
-            }
-        }
-        return data;
-    }
 }

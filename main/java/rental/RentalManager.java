@@ -41,43 +41,28 @@ public class RentalManager {
         rentalID ++;
     }
 
-    public Rental rentVehicle(int vin, Employee employee, Client client, int daysToRent){
-        /*
-        * Get vehicle from fleet -> check if available -> mark as rented -> add to rental LL -> add to activity log*/
-        Vehicle vehicle = fleet.getVehicleByVin(vin);
-        if(vehicle == null) throw new IllegalArgumentException(String.format("No Vehicle found with: %d", vin));
-        if(!vehicle.isAvailable()){
-            throw new IllegalArgumentException(String.format("Vehicle with VIN: %d is not available", vin));
-        }
+    public void rentVehicle(Rental rental){
 
-        vehicle.setAvailable(false);
-
-        Rental rental = new Rental(rentalID, vehicle, client, employee,
-                LocalDateTime.now(), LocalDateTime.now(),
-                fleet.getRateByVin(vin));
-
-        activeRentals.append(vin, rental);
+        activeRentals.append(rental.getVehicle().getVIN(), rental);
         rentalHistory.append(rental);
         String logMessage = String.format("EmployeeID: %d ==RENTED== %s ==TO== ClientID: %d",
-                employee.getStaffID(), String.format("%s %s (vin=%d)"), vehicle.getManufacturer(), vehicle.getModel(), vin,
-                client.getClientID());
+                employee.getStaffID(), String.format("%s %s (vin=%d)"), rental.getVehicle().getManufacturer(),
+                rental.getVehicle().getModel(), rental.getVehicle().getVIN(),
+                rental.getCustomer().getClientID());
 
         logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.CAR_RENTED));
-
-        return rental;
+        activeRentals.append(rental.getVehicle().getVIN(), rental);
     }
 
-    public void returnVehicle(Employee employee, Client client, int vin, int milesDriven){
-        /*
-        * Check if vehicle is rented (in LL) -> add mileage -> mark as available -> remove from rentedVehicle -> add to activity log*/
-        fleet.getVehicleByVin(vin).setOdometer(milesDriven);
+    public void returnVehicle(Rental rental){
 
-        Rental remove = activeRentals.removeByValue(vin); // remove the rental from active rentals
+        activeRentals.removeByValue(rental.getVehicle().getVIN());
 
-        String logMessage = String.format("ClientID: %d ==RETURNED== %s ==TO== EmployeeID: %d",
-                client.getClientID(), String.format("%s %s (vin=%d)",
-                        remove.getVehicle().getManufacturer(), remove.getVehicle().getModel(), vin),
-                employee.getStaffID());
+        String logMessage = String.format("EmployeeID: %d ==PROCESSED RETURN== %s ==FOR== ClientID: %d",
+                employee.getStaffID(), String.format("%s %s (vin=%d)"), rental.getVehicle().getManufacturer(),
+                rental.getVehicle().getModel(), rental.getVehicle().getVIN(),
+                rental.getCustomer().getClientID());
+
         logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.CAR_RETURNED));
     }
 
@@ -100,17 +85,47 @@ public class RentalManager {
         return results;
     }
 
-    public List<Rental> findRentalsByVin(int vin){
-        // returns a list of rentals for a specific car
-        List<Rental> results = new ArrayList<>();
+    public void printRentalByVin(int vin){
+        // prints rentals of vehicles with given vin number
 
-        // same as method above
+        // iterate through rental history
         for(Iterator<Rental> it = rentalHistory.items(); it.hasNext(); ){
-            Rental r = it.next();
+            Rental r = it.next(); // grab current rental
             if(r.getVehicle().getVIN() == vin){
-                results.add(r);
+                System.out.println(r.getVehicle());
             }
         }
-        return results;
+    }
+
+    public Rental findActiveRentalsByVin(int vin){
+        Rental found = null;
+        // use iterator to iterate activeRental values (Rental objects)
+        for (Iterator<Rental> it = activeRentals.iterator(); it.hasNext(); ) {
+            Rental r = it.next();
+            if(r.getVehicle().getVIN() == vin){ // see if the vehicle with that vin is an active rental
+                found = r;
+            }
+        }
+
+        return found; // return the rental
+    }
+
+    public void printRentedVehicles(){
+        // prints all the vehicles that are rented
+        List<Rental> results = new ArrayList<>();
+
+        // use iterator to iterate activeRental values (Rental objects)
+        for (Iterator<Rental> it = activeRentals.iterator(); it.hasNext(); ) {
+            Rental r = it.next();
+            System.out.println(r);
+        }
+    }
+
+    public void printRentalHistory(){
+        // prints rental history
+        // use iterator to iterate through Rentals LL
+        for(Iterator<Rental> it = rentalHistory.items(); it.hasNext(); ) {
+            System.out.print(it.next()); // print the rental
+        }
     }
 }

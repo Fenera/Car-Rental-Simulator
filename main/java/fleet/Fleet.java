@@ -285,26 +285,25 @@ public class Fleet {
                             numberOfSeats, conditionReport, numberDoors, awd,
                             new ElectricMotor(maxRange, batteryHealth), cargoCapacity, horsepower);
                 } else{
-                    System.out.println("Skipping vehicle - invalid fuel class: " + fuelClass);
+
+                    // print statements below are for testing
+                    //System.out.println("Skipping vehicle - invalid fuel class: " + fuelClass);
                     continue;
                 }
             } else {
-                System.out.println("Unknown vehicle class: " + vehicleClass + " for VIN " + vinNumber);
+                //System.out.println("Unknown vehicle class: " + vehicleClass + " for VIN " + vinNumber);
                 continue;
             }
 
-            System.out.println("Adding vehicle: VIN=" + vinNumber + " class=" + vehicleClass + " fuel=" + fuelClass);
+            //System.out.println("Adding vehicle: VIN = " + vinNumber + " class = " + vehicleClass + " fuel = " + fuelClass);
 
             vehicleByVinBST.insert(vinNumber, vehicle);
             rateByVinBST.insert(vinNumber, dailyRate);
             availableVehicleLL.append(vehicle);
         }
-        System.out.println("Finished loading " + availableVehicleLL.getLength() + " vehicles from file.");
+        //System.out.println("Finished loading " + availableVehicleLL.getLength() + " cars");
     }
 
-    public boolean carInFleet(int VIN){
-        return vehicleByVinBST.contains(VIN);
-    }
 
     public Vehicle getVehicleByVin(int vin){
         if(vehicleByVinBST.contains(vin)) {
@@ -345,10 +344,12 @@ public class Fleet {
     }
 
     public void filterByBodyType(String bodyType){
+        int count = 0;
         for(Iterator<Vehicle> it = availableVehicleLL.items(); it.hasNext();){
             Vehicle vehicle = it.next();
             if(vehicle.getBodyType().equalsIgnoreCase(bodyType)){
-                System.out.println(vehicle);
+                count ++;
+                System.out.println(count + ") Body Type = " + bodyType + " " + vehicle);
             }
         }
     }
@@ -367,7 +368,7 @@ public class Fleet {
             double dailyRate = rateByVinBST.searchByKey(vehicle.getVIN());
             if(dailyRate >= lowerLimit && dailyRate <= upperLimit){
                 count++;
-                System.out.println(vehicle);
+                System.out.println("\n" + count + ") Daily Rate  = $" + dailyRate + " " + vehicle);
             }
         }
         return count;
@@ -380,7 +381,7 @@ public class Fleet {
             int horsepower = vehicle.getHorsePower();
             if(horsepower >= lowerLimit && horsepower <= upperLimit){
                 count++;
-                System.out.println(vehicle);
+                System.out.println("\n" + count + ") Horsepower = " + horsepower + "hp " + vehicle);
             }
         }
         return count;
@@ -405,7 +406,7 @@ public class Fleet {
 
             if (mpg >= lowerLimit && mpg <= upperLimit) {
                 count++;
-                System.out.println(vehicle);
+                System.out.println("\n" + count + ") Fuel Economy = " + mpg + " mpg " + vehicle);
             }
         }
         return count;
@@ -432,7 +433,7 @@ public class Fleet {
 
             if(gas != null && gas.equalsIgnoreCase(gasType)){
                 count++;
-                System.out.println(vehicle);
+                System.out.println("\n" + count + ") Fuel Type = " + gas + " " + vehicle);
             }
         }
         return count;
