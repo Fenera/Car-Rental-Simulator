@@ -25,12 +25,13 @@ public class Employee extends Staff {
 
     @Override
     public String getInformation() {
-        return "Employee Information:\n" +
+        return "================================================\n" +
                 "ID: " + getStaffID() + "\n" +
                 "Name: " + getName() + "\n" +
                 "Email: " + getEmail() + "\n" +
                 "Phone: " + getPhoneNumber() + "\n" +
-                "Address: " + getAddress() + "\n";
+                "Address: " + getAddress() + "\n" +
+                "================================================\n\n";
     }
 }
 

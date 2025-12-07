@@ -169,23 +169,29 @@ public abstract class Vehicle {
 
     @Override
     public String toString() {
-        return "\nVehicle{" +
-                ", VIN=" + VIN +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", model='" + model + '\'' +
-                ", year=" + year +
-                ", odometer=" + odometer +
-                ", color='" + color + '\'' +
-                ", seatingCapacity=" + seatingCapacity +
-                ", conditionReport='" + conditionReport + '\'' +
-                ", numberOfDoors=" + numberOfDoors +
-                ", allWheelDrive=" + allWheelDrive +
-                ", horsePower=" + horsePower +
-                ", isAvailable=" + isAvailable +
-                "powertrain=" + powertrain +
-                '}';
+        return String.format("""
+            
+            ========================================
+            VIN:          %d
+            Vehicle:      %s %s
+            Year:         %d
+            Color:        %s
+            Mileage:      %,d miles
+            Horsepower:   %d HP
+            Seats:        %d
+            Doors:        %d
+            AWD:          %s
+            Powertrain:   %s
+            Available:    %s
+            ========================================
+            """,
+                VIN, manufacturer, model, year, color, odometer,
+                horsePower, seatingCapacity, numberOfDoors,
+                allWheelDrive ? "Yes" : "No",
+                powertrain.getMotor(),
+                isAvailable ? "Yes" : "No"
+        );
     }
-
     public abstract String getBodyType();
 }
 
