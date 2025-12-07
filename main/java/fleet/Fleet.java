@@ -437,4 +437,9 @@ public class Fleet {
         }
         return count;
     }
+
+    public double getRate(int vin){
+        // returns the rate (double) of the vehicle given its vin #
+        return rateByVinBST.searchByKey(vin);
+    }
 }
