@@ -1,14 +1,14 @@
 package client;
 
 public class Client {
-    private int clientID;
+    private static int clientID = 999;
     private String name;
     private String phoneNumber;
     private String email;
     private String address;
 
-    public Client(int clientID, String name, String phoneNumber, String email, String address) {
-        this.clientID = clientID;
+    public Client(String name, String phoneNumber, String email, String address) {
+        clientID ++;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.email = email;
