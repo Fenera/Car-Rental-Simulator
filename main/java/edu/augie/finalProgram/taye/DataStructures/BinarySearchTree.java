@@ -18,7 +18,7 @@ package edu.augie.finalProgram.taye.DataStructures;
 * Date: 12/5
 * */
 
-public class BinarySearchTree <T extends Comparable<T>, V> {
+public class BinarySearchTree <T extends Comparable<T>, V extends Comparable> {
 
     // create Node class
     // T must extend Number to implement comparison
@@ -95,7 +95,8 @@ public class BinarySearchTree <T extends Comparable<T>, V> {
                     if (newNode.key == temp.key) {
                         return false; // key already in BST
                     }
-                    if ((int) newNode.key < (int) temp.key) { // newNode is less than temp (to the left of)
+                    int compare = newNode.key.compareTo(temp.key);
+                    if (compare < 0) { // newNode is less than temp (to the left of)
                         if (temp.left == null) {
                             temp.left = newNode; // temp.left is empty so put newNode there
                             return true;
@@ -112,14 +113,16 @@ public class BinarySearchTree <T extends Comparable<T>, V> {
         }
 
         // checks if the binary search tree contains the key (i.e. Vin number)
-        public <T, V> boolean contains(T key){
+        public <T extends Comparable, V> boolean contains(T key){
             if(root == null) return true; // BST is empty
             Node temp = root; // temporary variable that points to root
             while(temp != null){
+
+                int compare = key.compareTo(temp.key);
                 // key is larger than temp's key (to the right of)
-                if((int) key > (int) temp.key){ // convert generic to int for statement to work
+                if(compare > 0){ // convert generic to int for statement to work
                     temp = temp.right; // shift temp to right node
-                } else if ((int) key < (int) temp.key){ // key is less than temp key(to the left of)
+                } else if (compare < 0){ // key is less than temp key(to the left of)
                     temp = temp.left; // shift temp to the left;
                 } else{ // key is not less than/more than temp so it is EQUAL
                     return true;

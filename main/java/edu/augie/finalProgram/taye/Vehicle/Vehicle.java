@@ -173,31 +173,36 @@ public abstract class Vehicle {
     // the trim() and replaceAll() is because when the strings are read in from the text file,
     // they are read in raw form so color for example would be "Red" and not Red
     public String toString() {
-        return String.format("""
-            +────────────────────────────────────────
-            │────────────────────────────────────────
-            │VIN:          %d                          \s
-            │Vehicle:      %s %s                    \s
-            │Year:         %d                          \s
-            │Color:        %s                          \s
-            │Mileage:      %,d miles                     \s
-            │Horsepower:   %d HP                       \s
-            │Seats:        %d                          \s
-            │Doors:        %d                          \s
-            │AWD:          %s                          \s
-            │Powertrain:   %s                          \s
-            │Available:    %s                          \s
-            +────────────────────────────────────────
-           \s""",
-                VIN, manufacturer.trim().replaceAll("\"", ""),
-                model.trim().replaceAll("\"", ""), year,
-                color.trim().replaceAll("\"", ""), odometer,
-                horsePower, seatingCapacity, numberOfDoors,
-                allWheelDrive ? "Yes" : "No", // true -> yes, else no
+        return String.format(
+                "+----------------------------------------\n" +
+                "|----------------------------------------\n" +
+                "|VIN:          %d\n" +
+                "|Vehicle:      %s %s\n" +
+                "|Year:         %d\n" +
+                "|Color:        %s\n" +
+                "|Mileage:      %,d miles\n" +
+                "|Horsepower:   %d HP\n" +
+                "|Seats:        %d\n" +
+                "|Doors:        %d\n" +
+                "|AWD:          %s\n" +
+                "|Powertrain:   %s\n" +
+                "|Available:    %s\n" +
+                "+----------------------------------------\n",
+                VIN,
+                manufacturer.trim().replaceAll("\"", ""),
+                model.trim().replaceAll("\"", ""),
+                year,
+                color.trim().replaceAll("\"", ""),
+                odometer,
+                horsePower,
+                seatingCapacity,
+                numberOfDoors,
+                allWheelDrive ? "Yes" : "No",
                 powertrain.getMotor(),
                 isAvailable ? "Yes" : "No"
         );
     }
+
     // abstract method that subclasses must implement
     public abstract String getBodyType();
 }

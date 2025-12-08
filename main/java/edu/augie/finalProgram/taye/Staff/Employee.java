@@ -36,20 +36,25 @@ public class Employee extends Staff {
     // Custom toString for Employee
     @Override
     public String toString() {
-        return String.format("""
-            +────────────────────────────────────────
-            │────────────────────────────────────────
-            │ID:    %d                          \s
-            │Name:          %s                        \s
-            │Email:      %s                    \s
-            │Phone:         %s                          \s
-            │Address:        %s                          \s
-            │Active:      %s                   \s
-            +────────────────────────────────────────
-           \s""", super.getStaffID(), super.getName(), super.getEmail(), super.getPhoneNumber(),
-                super.getAddress(), isActive ? "Yes" : "No"
+        return String.format(
+                "+----------------------------------------\n" +
+                "|----------------------------------------\n" +
+                "|ID:     %d\n" +
+                "|Name:   %s\n" +
+                "|Email:  %s\n" +
+                "|Phone:  %s\n" +
+                "|Address:%s\n" +
+                "|Active: %s\n" +
+                "+----------------------------------------\n",
+                super.getStaffID(),
+                super.getName(),
+                super.getEmail(),
+                super.getPhoneNumber(),
+                super.getAddress(),
+                isActive ? "Yes" : "No"
         );
     }
+
 }
 
 

@@ -637,23 +637,27 @@ public class Menu {
                 }
                 else if(manager.containsStaffID(staffID)){ // the user is an employee
                     while(true) {
-                        System.out.println("\n\n" +
+                        System.out.printf(
+                        "\n\n" +
                                 "====================================\n" +
                                 "           EMPLOYEE MENU\n" +
-                                "====================================\n\n");
-
-                        System.out.printf("%n1) %s" +
-                                        "%n2) %s" +
-                                        "%n3) %s" +
-                                        "%n4) %s" +
-                                        "%n5) %s" +
-                                        "%n6) %s" +
-                                        "%n7) %s%n",
-                                "View fleet", "View rented vehicles",
+                                "====================================\n\n" +
+                                "1) %s\n" +
+                                "2) %s\n" +
+                                "3) %s\n" +
+                                "4) %s\n" +
+                                "5) %s\n" +
+                                "6) %s\n" +
+                                "7) %s\n",
+                                "View fleet",
+                                "View rented vehicles",
                                 "Rent a vehicle",
                                 "Process return",
                                 "View rental history",
-                                "View rentals by VIN", "Return to main menu");
+                                "View rentals by VIN",
+                                "Return to main menu"
+                        );
+
                         System.out.print("\n\nEnter choice number: ");
                         int choice = input.nextInt(); // get the user's choice
                         input.nextLine();

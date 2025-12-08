@@ -64,14 +64,16 @@ public class LogEntry {
     // custom toString() method for log entries
     @Override
     public String toString() {
-        return String.format("""
-                 +────────────────────────────────────────
-                 │────────────────────────────────────────
-                 │Time:    %s                          \s
-                 │Message:          %s                          \s
-                 │Type:      %s                    \s
-                 +────────────────────────────────────────
-                \s""", getTime(), message, type.toString()
+        return String.format(
+                "+----------------------------------------\n" +
+                "|----------------------------------------\n" +
+                "|Time:    %s\n" +
+                "|Message: %s\n" +
+                "|Type:    %s\n" +
+                "+----------------------------------------\n",
+                getTime(),
+                message,
+                type.toString()
         );
     }
 }

@@ -44,33 +44,39 @@ public class Convertible extends Vehicle{
     // custom toString() method for Convertible with added attributes
     @Override
     public String toString() {
-        return String.format("""
-            +────────────────────────────────────────
-            │────────────────────────────────────────
-            │Body Type:    %s                          \s
-            │VIN:          %d                          \s
-            │Vehicle:      %s %s                    \s
-            │Year:         %d                          \s
-            │Color:        %s                          \s
-            │Mileage:      %,d miles                     \s
-            │Horsepower:   %d HP                       \s
-            │Seats:        %d                          \s
-            │Doors:        %d                          \s
-            │AWD:          %s                          \s
-            │Powertrain:   %s                          \s
-            │Available:    %s                          \s
-            │Soft Top:         %b                       \s
-            │Roll Bars:         %b                       \s
-            +────────────────────────────────────────
-           \s""",
-                "Convertible", super.getVIN(), super.getManufacturer().trim().replaceAll("\"", ""),
-                super.getModel().trim().replaceAll("\"", ""), 2025,
-                super.getColor().trim().replaceAll("\"", ""), super.getOdometer(),
-                super.getHorsePower(), super.getSeatingCapacity(), super.getNumberOfDoors(),
-                super.isAllWheelDrive() ? "Yes" : "No", // true -> yes, else no
+        return String.format(
+                "+----------------------------------------\n" +
+                "|----------------------------------------\n" +
+                "|Body Type:    %s\n" +
+                "|VIN:          %d\n" +
+                "|Vehicle:      %s %s\n" +
+                "|Year:         %d\n" +
+                "|Color:        %s\n" +
+                "|Mileage:      %,d miles\n" +
+                "|Horsepower:   %d HP\n" +
+                "|Seats:        %d\n" +
+                "|Doors:        %d\n" +
+                "|AWD:          %s\n" +
+                "|Powertrain:   %s\n" +
+                "|Available:    %s\n" +
+                "|Soft Top:     %s\n" +
+                "|Roll Bars:    %s\n" +
+                "+----------------------------------------\n",
+                "Convertible",
+                super.getVIN(),
+                super.getManufacturer().trim().replaceAll("\"", ""),
+                super.getModel().trim().replaceAll("\"", ""),
+                2025,
+                super.getColor().trim().replaceAll("\"", ""),
+                super.getOdometer(),
+                super.getHorsePower(),
+                super.getSeatingCapacity(),
+                super.getNumberOfDoors(),
+                super.isAllWheelDrive() ? "Yes" : "No",
                 super.getPowertrain().getMotor(),
                 super.isAvailable() ? "Yes" : "No",
-                softTop ? "Yes": "No", rollBars ? "Yes" : "No"
+                softTop ? "Yes" : "No",
+                rollBars ? "Yes" : "No"
         );
     }
 }
