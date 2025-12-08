@@ -590,7 +590,7 @@ public class Menu {
                                     // see if the staffID the manager chose is already in the system
                                     if (!manager.containsStaffID(staffID2)) { // not in system
                                         Employee employee = new Employee(name, email, phoneNumber,
-                                                address, staffID, true); // create employee object
+                                                address, staffID2, true); // create employee object
                                         manager.addEmployee(employee); // add the employee
                                         System.out.println("Employee Added: ");
                                         System.out.print(employee);
@@ -616,7 +616,7 @@ public class Menu {
                                     if (manager.containsStaffID(staffID3)) {
                                         Employee employee = manager.getEmployee(staffID3); // store instance of this employee
                                         employee.setActive(false); // set active to false
-                                        manager.removeEmployee(staffID); // remove employee
+                                        manager.removeEmployee(staffID3); // remove employee
                                         System.out.println("Employee Removed: ");
                                         System.out.print(employee); // print out details about the removed employee
                                         break; // break out of loop
@@ -636,156 +636,158 @@ public class Menu {
                     }
                 }
                 else if(manager.containsStaffID(staffID)){ // the user is an employee
-                    System.out.println("\n\n" +
-                            "====================================\n" +
-                            "           EMPLOYEE MENU\n" +
-                            "====================================\n\n");
+                    while(true) {
+                        System.out.println("\n\n" +
+                                "====================================\n" +
+                                "           EMPLOYEE MENU\n" +
+                                "====================================\n\n");
 
-                    System.out.printf("%n1) %s" +
-                                    "%n2) %s" +
-                                    "%n3) %s" +
-                                    "%n4) %s" +
-                                    "%n5) %s" +
-                                    "%n6) %s" +
-                                    "%n7) %s%n",
-                            "View fleet", "View rented vehicles",
-                            "Rent a vehicle",
-                            "Process return",
-                            "View rental history",
-                            "View rentals by VIN", "Return to main menu");
-                    System.out.print("\n\nEnter choice number: ");
-                    int choice = input.nextInt(); // get the user's choice
-                    input.nextLine();
+                        System.out.printf("%n1) %s" +
+                                        "%n2) %s" +
+                                        "%n3) %s" +
+                                        "%n4) %s" +
+                                        "%n5) %s" +
+                                        "%n6) %s" +
+                                        "%n7) %s%n",
+                                "View fleet", "View rented vehicles",
+                                "Rent a vehicle",
+                                "Process return",
+                                "View rental history",
+                                "View rentals by VIN", "Return to main menu");
+                        System.out.print("\n\nEnter choice number: ");
+                        int choice = input.nextInt(); // get the user's choice
+                        input.nextLine();
 
-                    switch (choice) {
-                        case 1:
-                            System.out.println("View Entire Fleet: \n\n");
-                            fleet.showInventory(); // prints all vehicles on fleet (available & unavailable)
-                            System.out.println("\nPress enter to continue...");
-                            input.nextLine();
-                            break;
-                        case 2: // view rented vehicles
-                            System.out.println("Rented vehicles: \n\n");
-                            rentalManager.printRentedVehicles();
-                            System.out.println("\nPress enter to continue...");
-                            input.nextLine();
-                            break;
-                        case 3: // Rent a vehicle
-                            while (true) {
-                                // get information about customer and rental
-                                System.out.println("Rent a vehicle\n");
-                                System.out.print("Enter the VIN of the vehicle: ");
-                                int vin = input.nextInt();
+                        switch (choice) {
+                            case 1:
+                                System.out.println("View Entire Fleet: \n\n");
+                                fleet.showInventory(); // prints all vehicles on fleet (available & unavailable)
+                                System.out.println("\nPress enter to continue...");
                                 input.nextLine();
-
-                                System.out.println("Enter customer information: ");
-                                System.out.print("Enter the name of the customer: ");
-                                String name = input.nextLine().trim();
-
-                                System.out.println();
-                                System.out.print("Enter customer's phone number: ");
-                                String phoneNumber = input.nextLine().trim();
-
-                                System.out.println();
-                                System.out.print("Enter the customer's email: ");
-                                String email = input.nextLine().trim();
-
-                                System.out.println();
-                                System.out.println("Enter the customer's address: ");
-                                String address = input.nextLine().trim();
-
-                                System.out.println();
-                                System.out.print("How many days is this rental: ");
-                                int days = input.nextInt();
+                                break;
+                            case 2: // view rented vehicles
+                                System.out.println("Rented vehicles: \n\n");
+                                rentalManager.printRentedVehicles();
+                                System.out.println("\nPress enter to continue...");
                                 input.nextLine();
+                                break;
+                            case 3: // Rent a vehicle
+                                while (true) {
+                                    // get information about customer and rental
+                                    System.out.println("Rent a vehicle\n");
+                                    System.out.print("Enter the VIN of the vehicle: ");
+                                    int vin = input.nextInt();
+                                    input.nextLine();
 
-                                // get vehicle with that vin
-                                Vehicle vehicle = fleet.getVehicleByVin(vin);
-                                Client client = new Client(name, phoneNumber, email, address);
+                                    System.out.println("Enter customer information: ");
+                                    System.out.print("Enter the name of the customer: ");
+                                    String name = input.nextLine().trim();
 
-                                if (!(vehicle == null)) {
-                                    if (vehicle.isAvailable()) { // is the vehicle available to rent
-                                        Rental rental = new Rental(vehicle, client, manager.getEmployee(staffID),
-                                                LocalDateTime.now(), LocalDateTime.now().plusDays(4), fleet.getRateByVin(vin));
-                                        rentalManager.rentVehicle(rental);
-                                        System.out.println("Employee (" + staffID + ")" + " Rented out => VIN: " + vehicle.getVIN() +
-                                                " Manufacturer: " + vehicle.getManufacturer() +
-                                                " Model +" + vehicle.getModel() + " to Client " + client.getName() + "(" +
-                                                client.getClientID() + ")");
-                                        break;
+                                    System.out.println();
+                                    System.out.print("Enter customer's phone number: ");
+                                    String phoneNumber = input.nextLine().trim();
+
+                                    System.out.println();
+                                    System.out.print("Enter the customer's email: ");
+                                    String email = input.nextLine().trim();
+
+                                    System.out.println();
+                                    System.out.println("Enter the customer's address: ");
+                                    String address = input.nextLine().trim();
+
+                                    System.out.println();
+                                    System.out.print("How many days is this rental: ");
+                                    int days = input.nextInt();
+                                    input.nextLine();
+
+                                    // get vehicle with that vin
+                                    Vehicle vehicle = fleet.getVehicleByVin(vin);
+                                    Client client = new Client(name, phoneNumber, email, address);
+
+                                    if (!(vehicle == null)) {
+                                        if (vehicle.isAvailable()) { // is the vehicle available to rent
+                                            Rental rental = new Rental(vehicle, client, manager.getEmployee(staffID),
+                                                    LocalDateTime.now(), LocalDateTime.now().plusDays(4), fleet.getRateByVin(vin));
+                                            rentalManager.rentVehicle(rental);
+                                            System.out.println("Employee (" + staffID + ")" + " Rented out => VIN: " + vehicle.getVIN() +
+                                                    " Manufacturer: " + vehicle.getManufacturer() +
+                                                    " Model +" + vehicle.getModel() + " to Client " + client.getName() + "(" +
+                                                    client.getClientID() + ")");
+                                            break;
+                                        } else {
+                                            System.out.println("This vehicle is not available to rent at the moment");
+                                        }
                                     } else {
-                                        System.out.println("This vehicle is not available to rent at the moment");
+                                        System.out.println("The VIN you entered is invalid");
                                     }
-                                } else {
-                                    System.out.println("The VIN you entered is invalid");
                                 }
-                            }
-                            System.out.println("\nPress enter to continue...");
-                            input.nextLine();
-                            break; // breaks out of switch-case
-
-                        case 4: // Process a return
-                            while (true) {
-                                // get vin of rental vehicle
-                                System.out.println("Process a return\n");
-                                System.out.print("Enter the VIN of the vehicle: ");
-                                int vin = input.nextInt();
+                                System.out.println("\nPress enter to continue...");
                                 input.nextLine();
+                                break; // breaks out of switch-case
 
-                                Vehicle vehicle = fleet.getVehicleByVin(vin); // get Vehicle obj to check validity of vin
+                            case 4: // Process a return
+                                while (true) {
+                                    // get vin of rental vehicle
+                                    System.out.println("Process a return\n");
+                                    System.out.print("Enter the VIN of the vehicle: ");
+                                    int vin = input.nextInt();
+                                    input.nextLine();
 
-                                // get Rental object of vehicle with that vin
-                                Rental rental = rentalManager.findActiveRentalsByVin(vin);
-                                if (!(vehicle == null)) {
-                                    if (!(rental == null)) { // rental is null (method returned null bc vehicle is not rented now)
-                                        rentalManager.returnVehicle(rental);
-                                        break;
+                                    Vehicle vehicle = fleet.getVehicleByVin(vin); // get Vehicle obj to check validity of vin
+
+                                    // get Rental object of vehicle with that vin
+                                    Rental rental = rentalManager.findActiveRentalsByVin(vin);
+                                    if (!(vehicle == null)) {
+                                        if (!(rental == null)) { // rental is null (method returned null bc vehicle is not rented now)
+                                            rentalManager.returnVehicle(rental);
+                                            break;
+                                        } else {
+                                            System.out.println("The vehicle is not an active rental");
+                                        }
                                     } else {
-                                        System.out.println("The vehicle is not an active rental");
+                                        System.out.println("The VIN you entered is invalid");
                                     }
-                                } else {
-                                    System.out.println("The VIN you entered is invalid");
                                 }
-                            }
-                            System.out.println("\nPress enter to continue...");
-                            input.nextLine();
-                            break; // breaks out of switch-case
-
-                        case 5:
-                            System.out.println("Rental History: \n\n");
-                            rentalManager.printRentalHistory(); // display the rental history
-                            break;
-                        case 6:
-                            while (true) {
-                                System.out.println("View rentals by vehicle\n\n");
-
-                                System.out.println("Enter the vin: ");
-                                int vin = input.nextInt();
+                                System.out.println("\nPress enter to continue...");
                                 input.nextLine();
+                                break; // breaks out of switch-case
 
-                                Vehicle vehicle = fleet.getVehicleByVin(vin);
+                            case 5:
+                                System.out.println("Rental History: \n\n");
+                                rentalManager.printRentalHistory(); // display the rental history
+                                break;
+                            case 6:
+                                while (true) {
+                                    System.out.println("View rentals by vehicle\n\n");
 
-                                if (!(vehicle == null)) {
-                                    rentalManager.printRentalByVin(vin);
-                                    break; // break out of loop
-                                } else {
-                                    System.out.println("No vehicle found with that VIN"); // continue with loop
+                                    System.out.println("Enter the vin: ");
+                                    int vin = input.nextInt();
+                                    input.nextLine();
+
+                                    Vehicle vehicle = fleet.getVehicleByVin(vin);
+
+                                    if (!(vehicle == null)) {
+                                        rentalManager.printRentalByVin(vin);
+                                        break; // break out of loop
+                                    } else {
+                                        System.out.println("No vehicle found with that VIN"); // continue with loop
+                                    }
                                 }
-                            }
-                            System.out.println("\nPress enter to continue...");
-                            input.nextLine();
-                            break; // breaks out of switch-case
+                                System.out.println("\nPress enter to continue...");
+                                input.nextLine();
+                                break; // breaks out of switch-case
 
-                        case 7:
-                            return;
-                        default:
-                            System.out.println("\n\nInvalid choice. Please try again."); // restarts loop
+                            case 7:
+                                return;
+                            default:
+                                System.out.println("\n\nInvalid choice. Please try again."); // restarts loop
+                        }
                     }
-                    break;
-                }else{ // the user is not a manager or employee
+                    }else{ // the user is not a manager or employee
                     System.out.println("\n\nIncorrect Staff ID");
                     System.out.println("\nPress enter to continue...");
                     input.nextLine();
+
                 }
             }
         } catch(InputMismatchException e){
