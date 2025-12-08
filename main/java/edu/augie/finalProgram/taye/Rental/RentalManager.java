@@ -3,6 +3,7 @@ package edu.augie.finalProgram.taye.Rental;
 import edu.augie.finalProgram.taye.Client.Client;
 import edu.augie.finalProgram.taye.DataStructures.LinkedList;
 import edu.augie.finalProgram.taye.DataStructures.LinkedList2;
+import edu.augie.finalProgram.taye.Fleet.Fleet;
 import edu.augie.finalProgram.taye.Staff.Employee;
 import edu.augie.finalProgram.taye.Utilities.LogEntry;
 import edu.augie.finalProgram.taye.Utilities.LogManager;
@@ -24,35 +25,48 @@ public class RentalManager {
     private LinkedList2<Integer, Rental> activeRentals; // stores active rentals
     private LinkedList<Rental> rentalHistory; // stores all rentals (active + past)
     private LogManager logManager;
+    private Fleet fleet;
 
 
 
-    public RentalManager(LogManager logManager){
+    public RentalManager(LogManager logManager, Fleet fleet){
         // initialize the variables
         this.logManager = logManager;
         activeRentals = new LinkedList2<>();
         rentalHistory = new LinkedList<>();
+        this.fleet = fleet;
     }
 
     public void rentVehicle(Rental rental){
         // Method for renting out a vehicle from the inventory
 
-        // add the vehicle to active rentals and edu.augie.finalProgram.taye.Rental history LL
+        // add the vehicle to active rentals and rental history LL
         activeRentals.append(rental.getVehicle().getVIN(), rental);
         rentalHistory.append(rental);
 
-        // create a log message
-        String logMessage = String.format("EmployeeID: %d ==RENTED== %s ==TO== ClientID: %d",
-                employee.getStaffID(), String.format("%s %s (vin=%d)"), rental.getVehicle().getManufacturer(),
-                rental.getVehicle().getModel(), rental.getVehicle().getVIN(),
-                rental.getCustomer().getClientID());
+        fleet.removeAvailableVehicle(rental.getVehicle());
+
+        // create vehicle messsage
+        String vehicleStr = String.format("%s %s (vin=%d)",
+                rental.getVehicle().getManufacturer(),
+                rental.getVehicle().getModel(),
+                rental.getVehicle().getVIN());
+
+        // create log message
+        String logMessage = String.format(
+                "EmployeeID: %d ==RENTED== %s ==TO== ClientID: %d",
+                rental.getEmployee().getStaffID(),
+                vehicleStr,
+                rental.getCustomer().getClientID()
+        );
+
 
         // add it to log manager
         logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.CAR_RENTED));
     }
 
     public void returnVehicle(Rental rental){
-        // Method for returning a edu.augie.finalProgram.taye.Rental to the inventory
+        // Method for returning a rental to the inventory
 
         // remove the vehicle from active rentals
         activeRentals.removeByValue(rental.getVehicle().getVIN());
@@ -86,9 +100,9 @@ public class RentalManager {
     public void printRentalByVin(int vin){
         // prints rentals of vehicles with given vin number
 
-        // iterate through edu.augie.finalProgram.taye.Rental history
+        // iterate through rental history
         for(Iterator<Rental> it = rentalHistory.items(); it.hasNext(); ){
-            Rental r = it.next(); // grab current edu.augie.finalProgram.taye.Rental
+            Rental r = it.next(); // grab current rental
             if(r.getVehicle().getVIN() == vin){
                 System.out.println(r.getVehicle());
             }
@@ -96,18 +110,18 @@ public class RentalManager {
     }
 
     public Rental findActiveRentalsByVin(int vin){
-        // returns active edu.augie.finalProgram.taye.Rental with that vin
+        // returns active rental with that vin
 
         Rental found = null;
         // use iterator to iterate activeRental values (Rental objects)
         for (Iterator<Rental> it = activeRentals.iterator(); it.hasNext(); ) {
             Rental r = it.next();
-            if(r.getVehicle().getVIN() == vin){ // see if the vehicle with that vin is an active edu.augie.finalProgram.taye.Rental
+            if(r.getVehicle().getVIN() == vin){ // see if the vehicle with that vin is an active rental
                 found = r;
             }
         }
 
-        return found; // return the edu.augie.finalProgram.taye.Rental (or null if non was found)
+        return found; // return the rental (or null if non was found)
     }
 
     public void printRentedVehicles(){
@@ -122,10 +136,10 @@ public class RentalManager {
     }
 
     public void printRentalHistory(){
-        // prints edu.augie.finalProgram.taye.Rental history
+        // prints rental history
         // use iterator to iterate through Rentals LL
         for(Iterator<Rental> it = rentalHistory.items(); it.hasNext(); ) {
-            System.out.print(it.next()); // print the edu.augie.finalProgram.taye.Rental
+            System.out.print(it.next()); // print the rental
         }
     }
 }

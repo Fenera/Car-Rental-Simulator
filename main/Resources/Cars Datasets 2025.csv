@@ -74,7 +74,7 @@ Jeep,Renegade,1.3L Turbo I4 Gasoline,1300 cc,177 hp,200 km/h,8.7 sec,"$28,345 ",
 Jeep,Gladiator,3.6L V6 Pentastar Gasoline,3600 cc,285 hp,177 km/h,8.1 sec,"$38,775 ",Petrol,5,353 Nm,SUV,19,22
 Jeep,Wagoneer,5.7L V8 Gasoline with eTorque,5700 cc,392 hp,190 km/h,7.4 sec,"$63,595 ",Petrol,8,548 Nm,SUV,17,26.5
 Mazda,Mazda2,1.5L 4-Cylinder,"1,500 cc",108 hp,180 km/h,10.2 sec,"$17,000 ",Petrol,5,142 Nm,SUV,32,11.3
-Jeep,Wagoneer S (Electric),Dual Electric Motors,100 kWh,600 hp,177 km/h,4.5 sec,"$80,000 ",Electric,5,850 Nm,Truck,0,0
+Jeep,Wagoneer S (Electric),Dual Electric Motors,100 kWh,600 hp,177 km/h,4.5 sec,"$80,000 ",Electric,5,850 Nm,SUV,0,0
 Kia,Seltos Nightfall Edition,1.6L Turbocharged 4-Cylinder,1591 cc,175 hp,210 km/h,7.5 sec,"$28,000 ",Petrol,5,264 Nm,Sedan,25,18.1
 Peugeot,508 PSE (Peugeot Sport Engineered),Hybrid I4 + Electric Motor,"1,599 cc (petrol) + Electric Motor",360 hp,250 km/h,5.2 sec,"$55,000 ",Hybrid,5,520 Nm,SUV,24,17.7
 Kia,Sorento X-Line,2.5L Turbocharged 4-Cylinder,2500 cc,277 hp,220 km/h,7.0 sec,"$42,000 ",Petrol,7,421 Nm,SUV,21,18.8
@@ -83,7 +83,7 @@ Kia,Forte LXS,2.0L 4-Cylinder,1999 cc,147 hp,190 km/h,9.2 sec,"$19,000 ",Petrol,
 Kia,K5 EX,1.6L Turbocharged 4-Cylinder,1591 cc,180 hp,220 km/h,7.8 sec,"$28,500 ",Petrol,5,264 Nm,SUV,105 MPGe,11.1
 Kia,Niro Plug-In Hybrid,1.6L 4-Cylinder Hybrid,1591 cc,139 hp,180 km/h,10.5 sec,"$33,000 ",Hybrid,5,265 Nm,SUV,105 MPGe,11.1
 Kia,EV6 Wind,Electric Motor,77.4 kWh,225 hp,190 km/h,5.2 sec,"$50,000 ",Electric,5,350 Nm,Hatchback,0,0
-Acura,NSX Type S,Twin-Turbo V6 Hybrid,"3,493 cc (V6)",600 hp,307 km/h,2.9 sec,"$157,000 ",Hybrid,2,666 Nm,Sedan,21,15
+Acura,NSX Type S,Twin-Turbo V6 Hybrid,"3,493 cc (V6)",600 hp,307 km/h,2.9 sec,"$157,000 ",Hybrid,2,666 Nm,Coupe,21,15
 Acura,TLX PMC Edition,V6,"3,500 cc (V6)",290 hp,250 km/h,5.7 sec,"$62,000 ",Petrol,5,362 Nm,SUV,23,17
 Acura,MDX Advance,V6,"3,500 cc (V6)",290 hp,190 km/h,6.0 sec,"$60,000 ",Petrol,7,362 Nm,SUV,21,19
 Acura,RDX Technology,I4 Turbocharged,"1,500 cc (I4)",272 hp,210 km/h,6.6 sec,"$45,000 ",Petrol,5,400 Nm,SUV,24,17

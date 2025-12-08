@@ -15,10 +15,10 @@ import java.util.List;
 
 public class Fleet {
     // attributes
-    private BinarySearchTree<Integer, Vehicle> vehicleByVinBST; // instantiate bst to store VIN and Vehicle object
-    private BinarySearchTree<Integer, Double> rateByVinBST; // instantiate bst to store VIN and daily rate ($)
-    private LinkedList<Vehicle> availableVehicleLL; // instantiate LL to store available Vehicles
-    Manager manager; // instantiate
+    private BinarySearchTree<Integer, Vehicle> vehicleByVinBST; // declare bst to store VIN and Vehicle object
+    private BinarySearchTree<Integer, Double> rateByVinBST; // declare bst to store VIN and daily rate ($)
+    private LinkedList<Vehicle> availableVehicleLL; // declare LL to store available Vehicles
+    Manager manager; // declare Manager object
     LogManager logManager;
 
     public Fleet(Manager manager, LogManager logManager){
@@ -146,7 +146,7 @@ public class Fleet {
             if (temp.isEmpty()) temp = "0";
             double dailyRate = Double.parseDouble(temp);
 
-            Vehicle vehicle; // instantiate Vehicle object
+            Vehicle vehicle; // declare Vehicle object
 
             // Do checks of fuelClass and Body type to create the correct Vehicle object
             // Check if it is an SUV
@@ -346,7 +346,10 @@ public class Fleet {
         //System.out.println("done loading " + availableVehicleLL.getLength() + " cars");
     }
 
-
+    public void removeAvailableVehicle(Vehicle vehicle){
+        // deletes vehicle from LL
+        availableVehicleLL.delete(vehicle);
+    }
     public Vehicle getVehicleByVin(int vin){
         // returns Vehicle object given vin
         if(vehicleByVinBST.contains(vin)) {
@@ -379,7 +382,7 @@ public class Fleet {
             availableVehicleLL.append(vehicle);
             rateByVinBST.insert(vehicle.getVIN(), dailyRate);
             // create an update log message
-            String logMessage = String.format("Manager (%d) added %s to the edu.augie.finalProgram.taye.Fleet",
+            String logMessage = String.format("Manager (%d) added %s to the fleet",
                     managerID, String.format("%s %s (vin=%d)", vehicle.getManufacturer(), vehicle.getModel(), vehicle.getVIN()));
 
             // add message to the logManager with the current time and the action
@@ -399,7 +402,7 @@ public class Fleet {
             rateByVinBST.delete(vin);
 
             // create log message
-            String logMessage = String.format("Manager (%d) removed %s from the edu.augie.finalProgram.taye.Fleet",
+            String logMessage = String.format("Manager (%d) removed %s from the fleet",
                     managerID, String.format("%s %s (vin=%d)", vehicle.getManufacturer(), vehicle.getModel(), vehicle.getVIN()));
 
             // add it to log manager
@@ -520,7 +523,7 @@ public class Fleet {
             // see if the gas from the power train matches the one the user gave
             if(gas != null && gas.equalsIgnoreCase(gasType)){
                 count++; // increment counter
-                System.out.println("\n" + count + ") Fuel Type = " + gas + " " + vehicle); // print the vehicle
+                System.out.println("\n" + count + ") Fuel Type = " + gas + " \n" + vehicle); // print the vehicle
             }
         }
         return count;

@@ -37,8 +37,8 @@ public class LogEntry {
 
     public String getTime() {
         // converts LocalDateTime object to String time with correct format
-        return String.format("%d/%d/%d @ %d:%d:%d", time.getMonth(), time.getDayOfMonth(), time.getYear(),
-                time.getHour(), time.getMinute(), time.getSecond());
+        return String.format("%d/%d/%d @ %d:%d:%d", time.getMonthValue(), time.getDayOfMonth(), time.getYear(),
+                time.getHour() > 12 ? time.getHour() - 12 : time.getHour(), time.getMinute(), time.getSecond());
     }
 
     public void setTime(LocalDateTime time) {
@@ -61,13 +61,17 @@ public class LogEntry {
         this.type = type;
     }
 
+    // custom toString() method for log entries
     @Override
     public String toString() {
-        return "LogEntry{" +
-                "time=" + getTime() +
-                ", message='" + message + '\'' +
-                ", type=" + type +
-                '}';
+        return String.format("""
+                 +────────────────────────────────────────
+                 │────────────────────────────────────────
+                 │Time:    %s                          \s
+                 │Message:          %s                          \s
+                 │Type:      %s                    \s
+                 +────────────────────────────────────────
+                \s""", getTime(), message, type.toString()
+        );
     }
-
 }

@@ -16,14 +16,17 @@ import java.util.Scanner;
 
 public class Menu {
 
-    // initialize objects
+    // declare variables
     private RentalManager rentalManager;
     private Fleet fleet;
     private LogManager logManager;
     private Scanner input;
     private Manager manager;
 
+    // constructor
     public Menu(RentalManager rentalManager, Fleet fleet, LogManager logManager, Manager manager){
+
+        // initialize variables
         this.rentalManager = rentalManager;
         this.fleet = fleet;
         this.logManager = logManager;
@@ -37,9 +40,9 @@ public class Menu {
             mainMenu();
         }
     }
+
     public void mainMenu(){
-        boolean run = true;
-        while(run) {
+        while(true) {
             // this is to catch if the user enters an incorrect datatype for a variable (i.e. string for int variable)
             try {
                 System.out.println("\n\n" +
@@ -85,7 +88,7 @@ public class Menu {
     }
 
     private void customerMenu() {
-        try {
+        try { // try-catch to catch InputMismatchException
             while (true) {
                 System.out.println("\n\n" +
                         "====================================\n" +
@@ -139,7 +142,7 @@ public class Menu {
                         while (!validBodyType) { // loop until they do
                             System.out.println("Filter by body type\n");
                             System.out.print("Enter the body type (options=SUV, Sedan, Convertible, Coupe, Truck, Van, Hatchback, Bus): ");
-                            String bodyTypeChoice = input.nextLine(); // get their choice
+                            String bodyTypeChoice = input.nextLine().trim(); // get their choice
 
                             switch (bodyTypeChoice.toLowerCase()) { // convert to lowercse to avoid case mismatch
                                 case "suv":
@@ -174,11 +177,11 @@ public class Menu {
                             double upperLimit = input.nextDouble();
                             input.nextLine();
 
-                            // 50 is arbitrary
+                            // 40 is arbitrary
 
                             // the user entered too low of a value
-                            if (lowerLimit <= 50 || upperLimit <= 50) {
-                                System.out.println("Range too low (minimum $50)");
+                            if (lowerLimit <= 40 || upperLimit <= 40) {
+                                System.out.println("Range too low (minimum $40)");
 
                                 // the user mixed up lower and upper
                             } else if (lowerLimit > upperLimit) {
@@ -198,69 +201,77 @@ public class Menu {
 
                     case 5: // View vehicle details
                         boolean validFilter = false;
-                        while (!validFilter) {
+                        while (!validFilter) { // loop runs until the user enters a valid filter
                             System.out.printf("\n\nFilter by:\n1) Horsepower\n2) Fuel Economy (mpg)\n3) Gas Type (Petrol, Diesel, Electric..)\n");
-                            System.out.print("Enter choice number: ");
-                            int filterChoice = input.nextInt();
+                            System.out.print("\nEnter choice number: ");
+                            int filterChoice = input.nextInt(); // get choice
                             input.nextLine();
 
+                            // switch-case to perform action based on user's decision
                             switch (filterChoice) {
-                                case 1:
+                                case 1: // filter by hp
                                     System.out.println("\n\nFilter by horsepower");
+                                    // get max and min hp
                                     System.out.print("Minimum: ");
                                     int minHp = input.nextInt();
                                     System.out.print("Maximum: ");
                                     int maxHp = input.nextInt();
                                     input.nextLine();
 
+                                    // see if the min and max are valid values
                                     if (minHp >= 0 && maxHp >= 0 && minHp <= maxHp) {
+                                        // get the count and print the vehicles with hp in that range
                                         int count = fleet.filterByHorsePower(minHp, maxHp);
-                                        if (count == 0) {
+                                        if (count == 0) { // no vehicles within hp range
                                             System.out.println("\n\nNo cars found within that range");
                                         }
-                                        validFilter = true;
+                                        validFilter = true; // set to true bc filter was valid -> breaks out of loop
                                     } else {
                                         System.out.println("\n\nInvalid range");
                                     }
-                                    break;
+                                    break; // breaks out of switch case
 
-                                case 2:
+                                case 2: // filter by fuel economy
                                     System.out.println("\n\nFilter by fuel economy (mpg)");
                                     System.out.print("Minimum: ");
+                                    // get min and max mpg
                                     int minMpg = input.nextInt();
                                     System.out.print("Maximum: ");
                                     int maxMpg = input.nextInt();
                                     input.nextLine();
 
+                                    // ensure valid range
                                     if (minMpg >= 0 && maxMpg >= 0 && minMpg <= maxMpg) {
+                                        // print vehicles within that range
                                         int count = fleet.filterByMPG(minMpg, maxMpg);
                                         if (count == 0) {
                                             System.out.println("\n\nNo cars found within that range");
                                         }
-                                        validFilter = true;
+                                        validFilter = true; // break out of loop
                                     } else {
                                         System.out.println("\n\nInvalid range");
                                     }
-                                    break;
+                                    break; // break out of switch case
 
-                                case 3:
+                                case 3: // filter by fuel type
                                     System.out.println("\n\nFilter by fuel type");
                                     System.out.print("Enter type (diesel, petrol, electric, hybrid, pih): ");
-                                    String fuelType = input.nextLine().trim();
+                                    String fuelType = input.nextLine().trim(); // get the user's fuel type
 
+                                    // determine valid input
                                     switch (fuelType.toLowerCase()) {
                                         case "diesel":
                                         case "petrol":
                                         case "electric":
                                         case "hybrid":
                                         case "pih":
-                                            fleet.filterByFuelType(fuelType);
-                                            validFilter = true;
-                                            break;
+                                            fleet.filterByFuelType(fuelType); // print vehicles with that fuel type
+                                            validFilter = true; // break out of loop
+                                            break; // break out of switch case
                                         default:
                                             System.out.println("\n\nInvalid fuel type");
                                     }
-                                    break;
+                                    break; // breaks out of switch case
 
                                 default:
                                     System.out.println("\n\nInvalid choice");
@@ -273,13 +284,15 @@ public class Menu {
                     case 6: // Show details about vehicle
                         System.out.println("\n\nView vehicle details");
                         System.out.print("\n\nEnter the VIN: ");
-                        int vinNumber = input.nextInt();
+                        int vinNumber = input.nextInt(); // get vin
                         input.nextLine();
 
-                        Vehicle vehicle = fleet.getVehicleByVin(vinNumber);
+                        Vehicle vehicle = fleet.getVehicleByVin(vinNumber); // get vehicle with vin
+
+                        // see if vehicle is valid
                         if (vehicle != null) {
-                            if (vehicle.isAvailable()) {
-                                System.out.println(vehicle);
+                            if (vehicle.isAvailable()) { // see if it available currently
+                                System.out.println(vehicle); // print the vehicle
                             } else {
                                 System.out.println("\n\nThat vehicle is currently not available.");
                             }
@@ -291,21 +304,25 @@ public class Menu {
                         break;
 
                     case 7: // Rent a vehicle
-                        System.out.println("\n\nEnter some personal information:");
+
+                        // get user's information
+                        System.out.println("\n\nEnter some personal information:\n");
                         System.out.print("Enter name: ");
-                        String name = input.nextLine();
+                        String name = input.nextLine().trim();
 
                         System.out.print("\n\nEnter phone number: ");
-                        String phoneNumber = input.nextLine();
+                        String phoneNumber = input.nextLine().trim();
 
                         System.out.print("\n\nEnter email: ");
-                        String email = input.nextLine();
+                        String email = input.nextLine().trim();
 
                         System.out.print("\n\nEnter address: ");
-                        String address = input.nextLine();
+                        String address = input.nextLine().trim();
 
+                        // create client object with user's information
                         Client client = new Client(name, phoneNumber, email, address);
 
+                        // get the vin of their choice
                         System.out.print("\n\nEnter the VIN of the car you chose: ");
                         int vinNumber2 = input.nextInt();
                         input.nextLine();
@@ -314,34 +331,37 @@ public class Menu {
                         int daysToRent = input.nextInt();
                         input.nextLine();
 
+                        // get vehicle from vin (null if not valid)
                         Vehicle vehicleToRent = fleet.getVehicleByVin(vinNumber2);
 
-                        // get employee object
+                        // get employee object (doesn't matter what employee bc we are on client side)
                         Employee employee = manager.getEmployee(1002);
 
+                        // make rental object with information given
                         Rental rental = new Rental(vehicleToRent, client, employee, LocalDateTime.now(),
                                 LocalDateTime.now().plusDays(daysToRent), fleet.getRateByVin(vinNumber2));
 
-                        if (vehicleToRent == null) {
-                            System.out.println("\n\nVehicle not found.");
-                            break;
+                        // vehicle is valid
+                        if (!(vehicleToRent == null)) {
+                            // vehicle is valid but not available to rent
+                            if(!vehicleToRent.isAvailable()) {
+                                System.out.println("The vehicle is not available, try again..");
+                                System.out.println("\nPress enter to continue...");
+                                input.nextLine();
+                            } else{
+                                rentalManager.rentVehicle(rental); // rent the vehicle
+                                System.out.println("Rented: \n");
+                                System.out.println(vehicleToRent);
+                                System.out.println("\n\nThank you for renting with us!");
+                                System.out.println("\nPress enter to continue...");
+                                input.nextLine();
+                                break;
+                            }
+                        } else{ // vehicle is not valid
+                            System.out.println("The vehicle is not in inventory, try again");
+                            System.out.println("\nPress enter to continue...");
+                            input.nextLine();
                         }
-
-                        if (!vehicleToRent.isAvailable()) {
-                            System.out.println("\n\nThat vehicle is not available for rent.");
-                            break;
-                        }
-
-                        System.out.print("\n\nHow many days do you want to rent the car for: ");
-                        int days = input.nextInt();
-                        input.nextLine();
-
-                        rentalManager.rentVehicle(rental);
-                        System.out.println("\n\nThank you for renting with us!");
-                        System.out.println("\nPress enter to continue...");
-                        input.nextLine();
-                        break;
-
                     case 8:
                         return; // this returns to where the method customerMenu() was called => mainMenu()
 
@@ -357,6 +377,7 @@ public class Menu {
     }
 
     private void staffMenu(){
+        // menu for staff: employee or manager
         try {
             while (true) {
                 System.out.println("\n\n" +
@@ -384,9 +405,9 @@ public class Menu {
                                         "%n6) %s" +
                                         "%n7) %s" +
                                         "%n8) %s%n",
-                                "View entire edu.augie.finalProgram.taye.Fleet", "View logs",
-                                "Add new vehicle to edu.augie.finalProgram.taye.Fleet",
-                                "Remove vehicle from edu.augie.finalProgram.taye.Fleet",
+                                "View entire fleet", "View logs",
+                                "Add new vehicle to fleet",
+                                "Remove vehicle from fleet",
                                 "View all employees",
                                 "Add employee",
                                 "Remove employee", "Return to main menu");
@@ -398,7 +419,7 @@ public class Menu {
                         switch (choice) {
                             case 1:
                                 System.out.println("View Entire Fleet: \n\n");
-                                fleet.showInventory(); // prints all vehicles on edu.augie.finalProgram.taye.Fleet (available & unavailable)
+                                fleet.showInventory(); // prints all vehicles on fleet (available & unavailable)
                                 System.out.println("\nPress enter to continue...");
                                 input.nextLine();
                                 break;
@@ -409,30 +430,30 @@ public class Menu {
                                 input.nextLine();
                                 break;
 
-                            case 3: // add new vehicle to edu.augie.finalProgram.taye.Fleet
+                            case 3: // add new vehicle to fleet
 
                         try{
                                 while (true) {
                                     // get information about the vehicle
-                                    System.out.println("\n\nAdd new vehicle to edu.augie.finalProgram.taye.Fleet\n");
+                                    System.out.println("\n\nAdd new vehicle to fleet\n");
                                     System.out.print("Enter the VIN of the vehicle: ");
                                     int vin = input.nextInt();
                                     input.nextLine();
 
-                                // see if vehicle is already in the edu.augie.finalProgram.taye.Fleet
+                                // see if vehicle is already in the fleet
                                 // returns null if the vehicle is not in the lot
                                 if(fleet.getVehicleByVin(vin) == null) {
                                     System.out.println();
                                     System.out.print("Enter the manufacturer: ");
-                                    String manufacturer = input.nextLine();
+                                    String manufacturer = input.nextLine().trim();
 
                                     System.out.println();
                                     System.out.print("Enter the model: ");
-                                    String model = input.nextLine();
+                                    String model = input.nextLine().trim();
 
                                     System.out.println();
                                     System.out.print("Enter the body type (SUV, Sedan...): ");
-                                    String bodyType = input.nextLine();
+                                    String bodyType = input.nextLine().trim();
 
                                     System.out.println();
                                     System.out.print("Enter the horsepower: ");
@@ -446,7 +467,7 @@ public class Menu {
 
                                     System.out.println();
                                     System.out.print("Enter the color: ");
-                                    String color = input.nextLine();
+                                    String color = input.nextLine().trim();
 
                                     System.out.println();
                                     System.out.print("Enter the number of seats: ");
@@ -455,7 +476,7 @@ public class Menu {
 
                                     System.out.println();
                                     System.out.print("Enter the conditionReport: ");
-                                    String conditionReport = input.nextLine();
+                                    String conditionReport = input.nextLine().trim();
 
                                     System.out.println();
                                     System.out.print("Enter the number of doors: ");
@@ -468,7 +489,7 @@ public class Menu {
 
                                     System.out.println();
                                     System.out.print("Enter the fuel type (petrol, diesel, hybrid, pih, electric): ");
-                                    String fuelType = input.nextLine();
+                                    String fuelType = input.nextLine().trim();
 
                                     System.out.println();
                                     System.out.print("Enter the fuel economy in mpg: ");
@@ -477,11 +498,11 @@ public class Menu {
 
                                     System.out.println();
                                     System.out.print("Enter the engine (i.e. 2.0 L i4): ");
-                                    String engine = input.nextLine();
+                                    String engine = input.nextLine().trim();
 
-                                    System.out.println();
-                                    System.out.print("Enter the tank size in L: ");
-                                    double tankSize = input.nextDouble();
+                                    // we planned on doing something with trip range estimates but we scrapped it
+                                    // 20 is arbitrary value
+                                    double tankSize = 20.0;
 
                                     System.out.println();
                                     System.out.print("Enter the daily rate ($): ");
@@ -501,13 +522,14 @@ public class Menu {
                                                 awd, fuelType, fuelEconomy, engine, tankSize, horsepower);
 
 
+                                        // add the vehicle to the fleet
                                         fleet.addNewVehicle(staffID, vehicle, dailyRate);
 
-                                        System.out.println("New Vehicle Added: \n\n");
+                                        System.out.println("\nNew Vehicle Added: \n\n");
                                         System.out.println(vehicle);
                                         break;
                                     } else{
-                                        System.out.println("\nVehicle is already present in the edu.augie.finalProgram.taye.Fleet\n\n");
+                                        System.out.println("\nVehicle is already present in the fleet\n\n");
                                     }
                                 }
                         } catch(InputMismatchException e){
@@ -517,9 +539,9 @@ public class Menu {
                                 input.nextLine();
                                 break; // breaks out of switch-case
 
-                            case 4: // Remove vehicle from edu.augie.finalProgram.taye.Fleet
+                            case 4: // Remove vehicle from fleet
                                 while (true) { // loop until the vin the user enter is valid
-                                    System.out.println("Remove the vehicle from the edu.augie.finalProgram.taye.Fleet\n");
+                                    System.out.println("Remove the vehicle from the fleet\n");
                                     System.out.print("Enter the VIN of the vehicle: ");
                                     int vin = input.nextInt();
                                     input.nextLine();
@@ -551,16 +573,16 @@ public class Menu {
                                     System.out.println("Add a new employee: \n\n");
                                     System.out.println("\nEnter their information");
                                     System.out.print("Enter name: ");
-                                    String name = input.nextLine();
+                                    String name = input.nextLine().trim();
 
                                     System.out.print("\n\nEnter phone number: ");
-                                    String phoneNumber = input.nextLine();
+                                    String phoneNumber = input.nextLine().trim();
 
                                     System.out.print("\n\nEnter email: ");
-                                    String email = input.nextLine();
+                                    String email = input.nextLine().trim();
 
                                     System.out.print("\n\nEnter address: ");
-                                    String address = input.nextLine();
+                                    String address = input.nextLine().trim();
 
                                     System.out.print("\n\nEnter staffID: ");
                                     int staffID2 = input.nextInt();
@@ -626,10 +648,10 @@ public class Menu {
                                     "%n5) %s" +
                                     "%n6) %s" +
                                     "%n7) %s%n",
-                            "View vehicle edu.augie.finalProgram.taye.Fleet", "View rented vehicles",
+                            "View fleet", "View rented vehicles",
                             "Rent a vehicle",
                             "Process return",
-                            "View edu.augie.finalProgram.taye.Rental history",
+                            "View rental history",
                             "View rentals by VIN", "Return to main menu");
                     System.out.print("\n\nEnter choice number: ");
                     int choice = input.nextInt(); // get the user's choice
@@ -638,7 +660,7 @@ public class Menu {
                     switch (choice) {
                         case 1:
                             System.out.println("View Entire Fleet: \n\n");
-                            fleet.showInventory(); // prints all vehicles on edu.augie.finalProgram.taye.Fleet (available & unavailable)
+                            fleet.showInventory(); // prints all vehicles on fleet (available & unavailable)
                             System.out.println("\nPress enter to continue...");
                             input.nextLine();
                             break;
@@ -650,7 +672,7 @@ public class Menu {
                             break;
                         case 3: // Rent a vehicle
                             while (true) {
-                                // get information about customer and edu.augie.finalProgram.taye.Rental
+                                // get information about customer and rental
                                 System.out.println("Rent a vehicle\n");
                                 System.out.print("Enter the VIN of the vehicle: ");
                                 int vin = input.nextInt();
@@ -658,22 +680,22 @@ public class Menu {
 
                                 System.out.println("Enter customer information: ");
                                 System.out.print("Enter the name of the customer: ");
-                                String name = input.nextLine();
+                                String name = input.nextLine().trim();
 
                                 System.out.println();
                                 System.out.print("Enter customer's phone number: ");
-                                String phoneNumber = input.nextLine();
+                                String phoneNumber = input.nextLine().trim();
 
                                 System.out.println();
                                 System.out.print("Enter the customer's email: ");
-                                String email = input.nextLine();
+                                String email = input.nextLine().trim();
 
                                 System.out.println();
                                 System.out.println("Enter the customer's address: ");
-                                String address = input.nextLine();
+                                String address = input.nextLine().trim();
 
                                 System.out.println();
-                                System.out.print("How many days is this edu.augie.finalProgram.taye.Rental: ");
+                                System.out.print("How many days is this rental: ");
                                 int days = input.nextInt();
                                 input.nextLine();
 
@@ -704,7 +726,7 @@ public class Menu {
 
                         case 4: // Process a return
                             while (true) {
-                                // get vin of edu.augie.finalProgram.taye.Rental vehicle
+                                // get vin of rental vehicle
                                 System.out.println("Process a return\n");
                                 System.out.print("Enter the VIN of the vehicle: ");
                                 int vin = input.nextInt();
@@ -715,11 +737,11 @@ public class Menu {
                                 // get Rental object of vehicle with that vin
                                 Rental rental = rentalManager.findActiveRentalsByVin(vin);
                                 if (!(vehicle == null)) {
-                                    if (!(rental == null)) { // edu.augie.finalProgram.taye.Rental is null (method returned null bc vehicle is not rented now)
+                                    if (!(rental == null)) { // rental is null (method returned null bc vehicle is not rented now)
                                         rentalManager.returnVehicle(rental);
                                         break;
                                     } else {
-                                        System.out.println("The vehicle is not an active edu.augie.finalProgram.taye.Rental");
+                                        System.out.println("The vehicle is not an active rental");
                                     }
                                 } else {
                                     System.out.println("The VIN you entered is invalid");
@@ -731,7 +753,7 @@ public class Menu {
 
                         case 5:
                             System.out.println("Rental History: \n\n");
-                            rentalManager.printRentalHistory(); // display the edu.augie.finalProgram.taye.Rental history
+                            rentalManager.printRentalHistory(); // display the rental history
                             break;
                         case 6:
                             while (true) {
