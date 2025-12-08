@@ -3,7 +3,7 @@ package edu.augie.finalProgram.taye.DataStructures;
 import java.util.Iterator;
 
 // singly-linked list
-// use for edu.augie.finalProgram.taye.Rental logs (write to .txt file in edu.augie.finalProgram.taye.Utilities package)
+// use for edu.augie.finalProgram.taye.Rental logs (write to .txt file in edu.augie.finalProgram.taye.Log package)
 // note to self: add (Object) to nodes in void methods & constructor
 /*
 * Source accessed: https://stackoverflow.com/questions/64861531/java-custom-iterator-for-linked-list

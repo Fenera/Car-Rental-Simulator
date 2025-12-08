@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.Utilities;
+package edu.augie.finalProgram.taye.Log;
 
 import edu.augie.finalProgram.taye.DataStructures.LinkedList;
 

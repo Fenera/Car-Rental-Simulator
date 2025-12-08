@@ -5,9 +5,9 @@ import edu.augie.finalProgram.taye.DataStructures.LinkedList;
 import edu.augie.finalProgram.taye.DataStructures.LinkedList2;
 import edu.augie.finalProgram.taye.Fleet.Fleet;
 import edu.augie.finalProgram.taye.Staff.Employee;
-import edu.augie.finalProgram.taye.Utilities.LogEntry;
-import edu.augie.finalProgram.taye.Utilities.LogManager;
-import edu.augie.finalProgram.taye.Utilities.LogType;
+import edu.augie.finalProgram.taye.Log.LogEntry;
+import edu.augie.finalProgram.taye.Log.LogManager;
+import edu.augie.finalProgram.taye.Log.LogType;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

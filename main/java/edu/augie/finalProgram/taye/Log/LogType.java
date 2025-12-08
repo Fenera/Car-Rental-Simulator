@@ -1,4 +1,4 @@
-package edu.augie.finalProgram.taye.Utilities;
+package edu.augie.finalProgram.taye.Log;
 
 // this enum is for Log actions (car rented out, car return, car added to fleet, car removed from fleet)
 public enum LogType {

@@ -3,10 +3,10 @@ import edu.augie.finalProgram.taye.Vehicle.*;
 import edu.augie.finalProgram.taye.DataStructures.BinarySearchTree;
 import edu.augie.finalProgram.taye.DataStructures.LinkedList;
 import edu.augie.finalProgram.taye.Staff.Manager;
-import edu.augie.finalProgram.taye.Utilities.LogEntry;
-import edu.augie.finalProgram.taye.Utilities.LogManager;
-import edu.augie.finalProgram.taye.Utilities.LogType;
-import edu.augie.finalProgram.taye.Utilities.ReadCSV;
+import edu.augie.finalProgram.taye.Log.LogEntry;
+import edu.augie.finalProgram.taye.Log.LogManager;
+import edu.augie.finalProgram.taye.Log.LogType;
+import edu.augie.finalProgram.taye.Log.ReadCSV;
 
 import java.io.IOException;
 import java.time.LocalDateTime;

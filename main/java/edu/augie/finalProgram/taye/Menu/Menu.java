@@ -8,7 +8,7 @@ import edu.augie.finalProgram.taye.Rental.Rental;
 import edu.augie.finalProgram.taye.Rental.RentalManager;
 import edu.augie.finalProgram.taye.Staff.Employee;
 import edu.augie.finalProgram.taye.Staff.Manager;
-import edu.augie.finalProgram.taye.Utilities.LogManager;
+import edu.augie.finalProgram.taye.Log.LogManager;
 
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
