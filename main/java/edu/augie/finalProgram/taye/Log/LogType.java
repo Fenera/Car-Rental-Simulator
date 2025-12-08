@@ -5,5 +5,7 @@ public enum LogType {
     CAR_RENTED,
     CAR_RETURNED,
     CAR_ADDED,
-    CAR_REMOVED
+    CAR_REMOVED,
+    EMPLOYEE_ADDED,
+    EMPLOYEE_REMOVED
 }

@@ -46,32 +46,44 @@ public class LinkedList2 <T extends Comparable<T>, V extends Iterable> {
 
 
     // Remove by object
-    public V removeByValue(T keyRemove) {
+    public V removeByKey(T keyRemove) {
         // LL is empty
         if (head == null) {
             return null;
         }
+
         // head is the node to remove
-        if (head != null && head.key == keyRemove) {
+        if (head != null && head.key.equals(keyRemove)) {
+            V removedValue = (V) head.value;  // Store value FIRST before moving head
             head = head.next;
-            return (V) head.value;
+            length--;
+            if (head == null) {  // If list is now empty
+                tail = null;     // Update tail too
+            }
+            return removedValue;
         }
+
         LinkedList2.Node currentNode = head;
         LinkedList2.Node previousNode = null;
-        LinkedList2.Node temp = null;
 
         // go through list and search for value
-        while (currentNode != null && currentNode.key != keyRemove) {
+        while (currentNode != null && !currentNode.key.equals(keyRemove)) {
             previousNode = currentNode;
             currentNode = currentNode.next;
-            temp = currentNode;
         }
 
         // if loop exited bc currentNode == null, skip if statement & return false
-        // if loop exited bc currentNode.value == valueRemove, enter if statement & return true
+        // if loop exited bc currentNode.key == keyRemove, enter if statement & return true
         if (currentNode != null) {
+            V removedValue = (V) currentNode.value;  // Store value before removing
             previousNode.next = currentNode.next;
-            return (V) temp.value;
+
+            if (currentNode == tail) {  // If we removed the tail
+                tail = previousNode;     // Update tail
+            }
+
+            length--;
+            return removedValue;
         }
         return null;
     }

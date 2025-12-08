@@ -8,7 +8,6 @@ import edu.augie.finalProgram.taye.Staff.Employee;
 import edu.augie.finalProgram.taye.Log.LogEntry;
 import edu.augie.finalProgram.taye.Log.LogManager;
 import edu.augie.finalProgram.taye.Log.LogType;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -68,14 +67,22 @@ public class RentalManager {
     public void returnVehicle(Rental rental){
         // Method for returning a rental to the inventory
 
-        // remove the vehicle from active rentals
-        activeRentals.removeByValue(rental.getVehicle().getVIN());
+        // make vehicle available in availableVehicleLL in fleet
+        fleet.addAvailableVehicle(rental.getVehicle());
 
+        // remove the vehicle from active rentals
+        activeRentals.removeByKey(rental.getVehicle().getVIN());
         // create a message for the log
-        String logMessage = String.format("EmployeeID: %d ==PROCESSED RETURN== %s ==FOR== ClientID: %d",
-                employee.getStaffID(), String.format("%s %s (vin=%d)"), rental.getVehicle().getManufacturer(),
-                rental.getVehicle().getModel(), rental.getVehicle().getVIN(),
-                rental.getCustomer().getClientID());
+        String logMessage = String.format(
+                "EmployeeID: %d ==PROCESSED RETURN== %s ==FOR== ClientID: %d",
+                rental.getEmployee().getStaffID(),
+                String.format("%s %s (vin=%d)",
+                        rental.getVehicle().getManufacturer(),
+                        rental.getVehicle().getModel(),
+                        rental.getVehicle().getVIN()
+                ), rental.getCustomer().getClientID()
+        );
+
 
         // add the message to the log manager
         logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.CAR_RETURNED));

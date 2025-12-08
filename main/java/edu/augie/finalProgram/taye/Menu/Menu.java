@@ -692,7 +692,7 @@ public class Menu {
                                     String email = input.nextLine().trim();
 
                                     System.out.println();
-                                    System.out.println("Enter the customer's address: ");
+                                    System.out.print("Enter the customer's address: ");
                                     String address = input.nextLine().trim();
 
                                     System.out.println();
@@ -711,8 +711,7 @@ public class Menu {
                                             rentalManager.rentVehicle(rental);
                                             System.out.println("Employee (" + staffID + ")" + " Rented out => VIN: " + vehicle.getVIN() +
                                                     " Manufacturer: " + vehicle.getManufacturer() +
-                                                    " Model +" + vehicle.getModel() + " to Client " + client.getName() + "(" +
-                                                    client.getClientID() + ")");
+                                                    " Model +" + vehicle.getModel() + " to Client " + client.getName());
                                             break;
                                         } else {
                                             System.out.println("This vehicle is not available to rent at the moment");
@@ -782,6 +781,7 @@ public class Menu {
                             default:
                                 System.out.println("\n\nInvalid choice. Please try again."); // restarts loop
                         }
+
                     }
                     }else{ // the user is not a manager or employee
                     System.out.println("\n\nIncorrect Staff ID");

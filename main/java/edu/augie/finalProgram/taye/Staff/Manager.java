@@ -1,9 +1,13 @@
 package edu.augie.finalProgram.taye.Staff;
 
 import edu.augie.finalProgram.taye.DataStructures.LinkedList;
+import edu.augie.finalProgram.taye.Log.LogEntry;
+import edu.augie.finalProgram.taye.Log.LogManager;
+import edu.augie.finalProgram.taye.Log.LogType;
 import edu.augie.finalProgram.taye.Log.ReadCSV;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,15 +16,18 @@ public class Manager extends Staff {
     // instantiate linked lists
     LinkedList<Employee> activeEmployeeLinkedList;
     LinkedList<Employee> allTimeEmployeeLinkedList;
+    LogManager logManager;
 
 
     // constructor
-    public Manager(String name, String email, String phoneNumber, String address, int staffID) {
+    public Manager(String name, String email,
+                   String phoneNumber, String address, int staffID, LogManager logManager) {
         super(name, email, phoneNumber, address, staffID);
 
         // instantiate LLs
         activeEmployeeLinkedList = new LinkedList<>();
         allTimeEmployeeLinkedList = new LinkedList<>();
+        this.logManager = logManager;
     }
 
     // similar logic to loadCarsFromFile() in Fleet class
@@ -108,12 +115,30 @@ public class Manager extends Staff {
 
     // adds employee to LL
     public void addEmployee(Employee employee){
+
         activeEmployeeLinkedList.append(employee);
+        allTimeEmployeeLinkedList.append(employee);
+
+        String employeeInfo = String.format("%s", employee.getName());
+        // create an update log message
+        String logMessage = String.format("Manager (%d) added %s to the company",
+                getStaffID(), employeeInfo);
+
+        // add message to the logManager with the current time and the action
+        logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.EMPLOYEE_ADDED));
     }
 
     // removes employee from LL
     public void removeEmployee(int staffID){
         Employee employee = getEmployee(staffID);
+
+        String employeeInfo = String.format("%s", employee.getName());
+        // create an update log message
+        String logMessage = String.format("Manager (%d) removed %s to the company",
+                staffID, employeeInfo);
+
+        // add message to the logManager with the current time and the action
+        logManager.addEntry(new LogEntry(LocalDateTime.now(), logMessage, LogType.EMPLOYEE_REMOVED));
         activeEmployeeLinkedList.delete(employee);
     }
 

@@ -371,6 +371,11 @@ public class Fleet {
         vehicleByVinBST.printTree(vehicleByVinBST.getRoot()); // use printTree to print the bst
     }
 
+    // adds vehicle to availableVehicleLL
+    public void addAvailableVehicle(Vehicle vehicle){
+        availableVehicleLL.append(vehicle);
+    }
+
     public void addNewVehicle(int managerID, Vehicle vehicle, double dailyRate){
         // method used by manager
         // adds new vehicle to lot
